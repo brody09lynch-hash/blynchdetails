@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,11 +47,6 @@
         .btn-red { background: linear-gradient(135deg, var(--red-deep) 0%, #4a0000 100%); border: 1px solid var(--red-sharp); transition: all 0.3s ease; }
         .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); background: var(--red-sharp); }
 
-        /* SCANNING LASER EFFECT */
-        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--red-sharp); box-shadow: 0 0 15px var(--red-sharp); opacity: 0; z-index: 1000; pointer-events: none; }
-        .scanning .scan-line { animation: scan-move 1s ease-in-out; opacity: 1; }
-        @keyframes scan-move { 0% { top: 0; } 100% { top: 100%; } }
-
         /* DATE PICKER VISUAL FEEDBACK */
         .active-date { 
             background-color: var(--red-sharp) !important; 
@@ -67,16 +62,15 @@
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 30px; width: 30px; border-radius: 50%; background: #fff; margin-top: -11px; border: 3px solid var(--red-sharp); box-shadow: 0 0 20px var(--red-sharp); }
 
         @media (max-width: 768px) {
-            .mobile-title { font-size: 1.65rem !important; line-height: 1.2 !important; }
-            .nav-link { font-size: 10px !important; letter-spacing: 0.05em !important; }
+            .mobile-title { font-size: 1.6rem !important; line-height: 1.2 !important; }
+            .nav-container { gap: 0.5rem !important; padding-left: 0.5rem; padding-right: 0.5rem; }
+            .nav-link { font-size: 8px !important; letter-spacing: 0.05em !important; }
+            .logo-img { height: 28px !important; }
             .car-group { animation-duration: 8s; }
-            .glass { border-width: 1.5px; }
         }
     </style>
 </head>
 <body class="bg-black">
-
-    <div class="scan-line" id="global-scan"></div>
 
     <!-- THE RACE CAR LAYER -->
     <div class="race-container">
@@ -97,14 +91,15 @@
     </div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-[100] px-3 md:px-8 py-3 md:py-5 flex justify-between items-center glass border-b border-white/10">
+    <nav class="fixed top-0 w-full z-[100] md:px-8 py-3 md:py-5 flex justify-between items-center glass border-b border-white/10 nav-container">
         <a href="#" class="flex items-center">
-            <img src="logo.png" alt="Blynch Details" class="h-7 md:h-14">
+            <img src="logo.png" alt="Blynch Details" class="logo-img h-8 md:h-14">
         </a>
-        <div class="flex gap-3 md:gap-10 items-center font-sync">
-            <button onclick="toggleOverlay('service-page')" class="nav-link text-[9px] md:text-[11px] hover:text-red-500 transition italic">Services</button>
-            <button onclick="toggleOverlay('contact-page')" class="nav-link text-[9px] md:text-[11px] hover:text-red-500 transition italic">Contact</button>
-            <a href="#booking-start" class="btn-red text-white px-4 md:px-10 py-2 md:py-3 rounded-full italic font-black text-[9px] md:text-[11px] tracking-widest">BOOK</a>
+        <div class="flex gap-2 md:gap-8 items-center font-sync">
+            <button onclick="toggleOverlay('why-us-page')" class="nav-link text-[8px] md:text-[11px] hover:text-red-500 transition italic font-bold">Why Us</button>
+            <button onclick="toggleOverlay('service-page')" class="nav-link text-[8px] md:text-[11px] hover:text-red-500 transition italic font-bold">Services</button>
+            <button onclick="toggleOverlay('contact-page')" class="nav-link text-[8px] md:text-[11px] hover:text-red-500 transition italic font-bold">Contact</button>
+            <a href="#booking-start" class="btn-red text-white px-3 md:px-10 py-2 md:py-3 rounded-full italic font-black text-[8px] md:text-[11px]">BOOK</a>
         </div>
     </nav>
 
@@ -114,77 +109,55 @@
         <h1 class="font-sync text-2xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-4 mobile-title">
             PERFECTION LIVES IN<br><span class="text-red-600">THE SMALL DETAILS.</span>
         </h1>
-        <p class="text-[11px] md:text-sm text-gray-300 max-w-xl mx-auto italic font-bold tracking-[0.2em] md:tracking-[0.3em] mb-12 uppercase leading-relaxed">
+        <p class="text-[11px] md:text-sm text-gray-300 max-w-xl mx-auto italic font-bold tracking-[0.3em] mb-12 uppercase leading-relaxed">
             Houston's Private Interior Restoration Studio.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto">
-            <a href="#booking-start" class="font-sync bg-white text-black px-8 py-5 rounded-full text-[10px] font-black hover:bg-red-600 hover:text-white transition-all shadow-2xl italic">Begin Protocol</a>
-            <button onclick="toggleOverlay('service-page')" class="font-sync glass text-white px-8 py-5 rounded-full text-[10px] font-black italic">Learn More</button>
+            <a href="#booking-start" class="font-sync bg-white text-black px-8 py-5 rounded-full text-[10px] font-black hover:bg-red-600 hover:text-white transition-all shadow-2xl scale-105 italic">Begin Protocol</a>
+            <button onclick="toggleOverlay('why-us-page')" class="font-sync glass text-white px-8 py-5 rounded-full text-[10px] font-black italic">The Advantage</button>
         </div>
     </section>
 
-    <!-- THE BLYNCH PROTOCOL -->
-    <section class="py-20 md:py-40 px-6 relative z-10 italic">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="font-sync text-[12px] md:text-[14px] text-red-600 font-black mb-4 tracking-widest reveal">The Blynch Protocol</h2>
-            <h3 class="text-3xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-16 md:mb-24 reveal">Surgical Standards.</h3>
+    <!-- WHY US OVERLAY (THE BLYNCH ADVANTAGE) -->
+    <div id="why-us-page" class="overlay-page italic">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="toggleOverlay('why-us-page')" class="fixed top-6 right-6 font-sync text-red-600 font-black text-[10px] bg-white text-black px-5 py-3 rounded-full z-[600]">CLOSE [X]</button>
+            <h2 class="font-sync text-3xl md:text-6xl text-white mb-10 italic">The Blynch<br><span class="text-red-600">Advantage.</span></h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-                <div class="glass p-8 md:p-12 rounded-[30px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-xs text-red-500 font-black mb-6 italic">01. Zero Judgment</h4>
-                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">Whether it's family chaos or a work-truck disaster, our studio is a focused "Reset" zone.</p>
+            <div class="space-y-10">
+                <div class="glass p-8 rounded-[40px] border-red-600">
+                    <h3 class="font-sync text-lg text-red-500 mb-4 italic">Elite Quality. Lower Prices.</h3>
+                    <p class="text-white text-sm md:text-base leading-relaxed font-bold italic">
+                        Because Blynch Details operates as a private, home-based studio, we don't have the $5,000+ monthly rent and utility costs of a commercial shop. 
+                        <br><br>
+                        <span class="text-red-500 underline underline-offset-4">We pass those savings directly to you.</span> You get the same medical-grade steam, clinical extraction, and high-end chemicals as a boutique shop, but at a price that high-volume car washes can't beat for this level of depth.
+                    </p>
                 </div>
-                <div class="glass p-8 md:p-12 rounded-[30px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-xs text-red-500 font-black mb-6 italic">02. Surgical Depth</h4>
-                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">We target tracks, vents, and internal crevices. We detail what others ignore.</p>
-                </div>
-                <div class="glass p-8 md:p-12 rounded-[30px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-xs text-red-500 font-black mb-6 italic">03. Clinical Gear</h4>
-                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">Medical-grade steam and high-heat extraction to vaporize odors at the molecular level.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- BOOKING ENGINE -->
-    <section id="booking-start" class="py-20 md:py-24 px-6 relative z-10 italic reveal">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="font-sync text-[12px] md:text-[14px] text-red-500 font-black mb-10 md:mb-12 tracking-widest">Step I. Identification</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 md:mb-24">
-                <div onclick="setSize('Sedan', 0)" id="size-0" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[11px] md:text-[13px] italic font-black">Sedan / Coupe</div>
-                <div onclick="setSize('2Row', 1)" id="size-1" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[11px] md:text-[13px] italic font-black">2 Row SUV</div>
-                <div onclick="setSize('3Row', 2)" id="size-2" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[11px] md:text-[13px] italic font-black">3 Row / Truck</div>
-            </div>
-
-            <div id="package-section" class="hidden opacity-0 transition-all duration-1000">
-                <h2 class="font-sync text-[12px] md:text-[14px] text-red-500 font-black text-center mb-10 md:mb-12 tracking-widest">Step II. Mission Tier</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-                    <div onclick="openConfig('basic')" class="glass p-10 md:p-12 rounded-[40px] group border-white/20 hover:border-red-600 transition cursor-pointer">
-                        <h3 class="font-sync text-xl md:text-2xl text-white mb-2 italic">Basic Refresh</h3>
-                        <div id="price-basic" class="font-sync text-3xl md:text-4xl text-red-600 font-black mt-4">$120</div>
-                        <button class="mt-10 md:mt-12 w-full bg-white text-black font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Select Protocol</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass p-8 rounded-3xl">
+                        <h4 class="text-red-500 font-bold mb-4 font-sync text-xs">Direct accountability</h4>
+                        <p class="text-xs text-gray-200 font-bold leading-relaxed italic">At big shops, you never know who is inside your car. Here, you deal directly with the founder. I personally sign off on every vent, seat track, and crevice.</p>
                     </div>
-                    <div onclick="openConfig('benchmark')" class="glass p-10 md:p-12 rounded-[40px] group border-red-700 shadow-2xl transition cursor-pointer">
-                        <h3 class="font-sync text-xl md:text-2xl text-white mb-2 italic">Benchmark</h3>
-                        <div id="price-benchmark" class="font-sync text-3xl md:text-4xl text-red-600 font-black mt-4">$150</div>
-                        <button class="mt-10 md:mt-12 w-full btn-red text-white font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Select Protocol</button>
+                    <div class="glass p-8 rounded-3xl">
+                        <h4 class="text-red-500 font-bold mb-4 font-sync text-xs">Micro-Detail Obsession</h4>
+                        <p class="text-xs text-gray-200 font-bold leading-relaxed italic">Most detailers skip the "invisibles." The Blynch Protocol includes seat tracks, internal vent blades, and electronic button gaps as standard.</p>
+                    </div>
+                    <div class="glass p-8 rounded-3xl">
+                        <h4 class="text-red-500 font-bold mb-4 font-sync text-xs">Private & Secure</h4>
+                        <p class="text-xs text-gray-200 font-bold leading-relaxed italic">Your vehicle is the only one in the studio. It receives 100% of our focus, kept in a secure, monitored environment on McGovern Road.</p>
+                    </div>
+                    <div class="glass p-8 rounded-3xl">
+                        <h4 class="text-red-500 font-bold mb-4 font-sync text-xs">Local Discipline</h4>
+                        <p class="text-xs text-gray-200 font-bold leading-relaxed italic">Supporting Blynch Details means supporting local entrepreneurial growth. Our reputation is built on hard work and clinical results.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ABOUT US -->
-    <section id="about" class="py-24 md:py-48 px-6 glass rounded-t-[60px] md:rounded-t-[120px] relative z-10 italic reveal">
-        <div class="max-w-4xl mx-auto italic text-center">
-            <h2 class="font-sync text-[12px] md:text-[14px] text-red-500 font-black mb-6 tracking-widest italic">The Studio & Founder</h2>
-            <h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-12 md:mb-16 leading-tight">Built On <span class="text-red-700">Discipline.</span></h3>
-            <div class="space-y-12 text-white text-lg md:text-xl font-bold leading-relaxed text-left md:text-center italic">
-                <p>Blynch Details was founded on a drive for mastery. Nearly two years ago, I launched this studio to provide Houston with an interior restoration standard that simply didn't exist in high-volume shops.</p>
-                <p>As a <span class="text-red-500">16-year-old entrepreneur</span>, I approach every project with business discipline and uncompromising attention to detail. Every vehicle that enters my studio is treated with the same precision I would expect for my own vehicle.</p>
+            <div class="mt-16 text-center">
+                <button onclick="toggleOverlay('why-us-page'); document.getElementById('booking-start').scrollIntoView()" class="btn-red text-white px-12 py-5 rounded-full font-sync text-[10px] font-black italic">BOOK WITH THE BEST</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- SERVICE OVERLAY -->
     <div id="service-page" class="overlay-page italic">
@@ -192,17 +165,17 @@
             <button onclick="toggleOverlay('service-page')" class="fixed top-6 right-6 font-sync text-red-600 font-black text-[10px] bg-white text-black px-5 py-3 rounded-full z-[600]">CLOSE [X]</button>
             <h2 class="font-sync text-3xl md:text-6xl text-white mb-16 italic">Service<br><span class="text-red-600">Breakdown.</span></h2>
             <div class="space-y-16">
-                <div class="glass p-8 md:p-12 rounded-[40px]">
+                <div class="glass p-8 md:p-12 rounded-[40px] border-white/20">
                     <h3 class="font-sync text-xl text-red-600 mb-6 italic">The Basic Refresh</h3>
-                    <ul class="space-y-4 text-sm text-white font-bold">
+                    <ul class="space-y-4 text-base text-white font-bold italic">
                         <li>• Debris Extraction & Trash Removal</li><li>• High-Power Multi-Point Vacuum</li><li>• pH-Neutral Surface Reset</li><li>• Streak-Free Clarity Windows</li><li>• Signature Air Restoration Scent</li>
                     </ul>
                 </div>
                 <div class="glass p-8 md:p-12 rounded-[40px] border-red-600">
                     <h3 class="font-sync text-xl text-red-600 mb-6 italic">The Blynch Benchmark</h3>
-                    <ul class="space-y-4 text-sm text-white font-bold">
+                    <ul class="space-y-4 text-base text-white font-bold italic">
                         <li class="text-red-500 underline decoration-red-600 font-black italic">INCLUDES BASIC PLUS:</li>
-                        <li>• Vapor Steam Restoration</li><li>• Hot Water Extraction</li><li>• Targeted Stain Remediation</li><li>• Surgical Detailing of Crevices</li>
+                        <li>• Vapor Steam Restoration (Vents/Plastics)</li><li>• Hot Water Carpet & Fabric Extraction</li><li>• Targeted Stain Remediation Protocol</li><li>• Surgical Detailing of All Crevices</li>
                     </ul>
                 </div>
             </div>
@@ -217,11 +190,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div class="space-y-8">
                     <div class="glass p-8 rounded-3xl border-red-600">
-                        <h3 class="text-red-600 font-sync text-[10px] mb-4">Phone Protocol</h3>
+                        <h3 class="text-red-600 font-sync text-[10px] mb-4">Direct Line</h3>
                         <a href="tel:7245998113" class="text-2xl font-black text-white italic">724-599-8113</a>
                     </div>
                     <div class="glass p-8 rounded-3xl border-red-600">
-                        <h3 class="text-red-600 font-sync text-[10px] mb-4">Studio Location</h3>
+                        <h3 class="text-red-600 font-sync text-[10px] mb-4">Location</h3>
                         <a href="https://www.google.com/maps/search/?api=1&query=812+McGovern+Road+Houston+PA" target="_blank" class="text-lg text-white font-bold leading-relaxed italic">812 McGovern Road, Houston, PA</a>
                     </div>
                 </div>
@@ -234,14 +207,77 @@
         </div>
     </div>
 
+    <!-- THE BLYNCH PROTOCOL (WHY US SUMMARY ON MAIN PAGE) -->
+    <section class="py-20 md:py-40 px-6 relative z-10 italic">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="font-sync text-[14px] text-red-600 font-black mb-4 tracking-widest reveal">The Blynch Protocol</h2>
+            <h3 class="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-20 reveal">Surgical Standards.</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
+                    <h4 class="font-sync text-sm text-red-500 font-black mb-6 italic">01. Zero Judgment</h4>
+                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">Whether it's family chaos or a work-truck disaster, our studio is a focused "Reset" zone.</p>
+                </div>
+                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
+                    <h4 class="font-sync text-sm text-red-500 font-black mb-6 italic">02. Surgical Depth</h4>
+                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">We target tracks, vents, and internal crevices. We detail what others ignore.</p>
+                </div>
+                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
+                    <h4 class="font-sync text-sm text-red-500 font-black mb-6 italic">03. Clinical Gear</h4>
+                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">Medical-grade steam and high-heat extraction to vaporize odors at the molecular level.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING ENGINE -->
+    <section id="booking-start" class="py-20 md:py-24 px-6 relative z-10 italic reveal">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="font-sync text-[14px] text-red-500 font-black mb-10 md:mb-12 tracking-widest">Step I. Identification</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 md:mb-24">
+                <div onclick="setSize('Sedan', 0)" id="size-0" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[13px] italic font-black">Sedan / Coupe</div>
+                <div onclick="setSize('2Row', 1)" id="size-1" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[13px] italic font-black">2 Row SUV</div>
+                <div onclick="setSize('3Row', 2)" id="size-2" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[13px] italic font-black">3 Row / Truck</div>
+            </div>
+
+            <div id="package-section" class="hidden opacity-0 transition-all duration-1000">
+                <h2 class="font-sync text-[14px] text-red-500 font-black text-center mb-10 md:mb-12 tracking-widest">Step II. Mission Tier</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                    <div onclick="openConfig('basic')" class="glass p-10 md:p-12 rounded-[40px] group border-white/20 hover:border-red-600 transition cursor-pointer">
+                        <h3 class="font-sync text-2xl text-white mb-2 italic">Basic Refresh</h3>
+                        <div id="price-basic" class="font-sync text-4xl text-red-600 font-black mt-4">$120</div>
+                        <button class="mt-10 md:mt-12 w-full bg-white text-black font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Select Protocol</button>
+                    </div>
+                    <div onclick="openConfig('benchmark')" class="glass p-10 md:p-12 rounded-[40px] group border-red-700 shadow-2xl transition cursor-pointer">
+                        <h3 class="font-sync text-2xl text-white mb-2 italic">Benchmark</h3>
+                        <div id="price-benchmark" class="font-sync text-4xl text-red-600 font-black mt-4">$150</div>
+                        <button class="mt-10 md:mt-12 w-full btn-red text-white font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Select Protocol</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section id="about" class="py-24 md:py-48 px-6 glass rounded-t-[60px] md:rounded-t-[120px] relative z-10 italic reveal">
+        <div class="max-w-4xl mx-auto italic text-center">
+            <h2 class="font-sync text-[14px] text-red-500 font-black mb-6 tracking-widest italic">The Studio & Founder</h2>
+            <h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-12 md:mb-16 leading-tight italic">Built On <span class="text-red-700">Discipline.</span></h3>
+            <div class="space-y-12 text-white text-lg md:text-xl font-bold leading-relaxed text-left md:text-center italic">
+                <p>Blynch Details was founded on a drive for mastery. Nearly two years ago, I launched this studio to provide the Houston area with an interior restoration standard that simply didn't exist in high-volume shops.</p>
+                <p>As a <span class="text-red-500">16-year-old entrepreneur</span>, I approach every project with business discipline and uncompromising attention to detail. Every vehicle that enters my professional garage studio in Houston, PA is treated with the same precision I would expect for my own vehicle. Dealing directly with the owner ensures consistency that large car washes simply cannot match.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- CONFIGURATOR TRAY -->
     <div id="config-modal" class="fixed inset-0 modal-overlay z-[600] hidden flex items-end md:items-center justify-center p-0 md:p-4 italic">
         <div id="config-tray" class="glass border-t-4 md:border-4 border-red-700 w-full max-w-3xl rounded-t-[40px] md:rounded-[60px] overflow-hidden flex flex-col max-h-[92vh] tray-anim">
-            <div class="p-6 md:p-10 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-red-900/40 to-transparent">
+            <div class="p-8 md:p-12 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-red-900/40 to-transparent">
                 <h2 class="font-sync text-lg md:text-xl text-white font-black italic">Diagnostic Suite</h2>
                 <button onclick="closeConfig()" class="text-white text-3xl">✕</button>
             </div>
-            <div class="p-6 md:p-10 overflow-y-auto space-y-12">
+            <div class="p-8 md:p-12 overflow-y-auto space-y-12">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 italic">
                     <div class="p-8 rounded-3xl border-2 border-red-600 flex justify-between items-center bg-black">
                         <div><h4 class="font-sync text-[11px] text-red-500 font-black italic">Pet Hair?</h4><p class="text-[10px] text-white italic font-black uppercase">Static Lift (+$20)</p></div>
@@ -249,8 +285,8 @@
                     </div>
                     <div class="p-8 rounded-3xl border-2 border-white/20 bg-black">
                         <div class="flex justify-between items-center mb-6 italic">
-                            <h4 class="font-sync text-[11px] text-red-500 font-black">Soil Gauge</h4>
-                            <span id="soil-val" class="font-sync text-lg text-white font-black italic">5/10</span>
+                            <h4 class="font-sync text-[11px] text-red-500 font-black italic">Soil Gauge</h4>
+                            <span id="soil-val" class="font-sync text-xl text-white font-black italic">5/10</span>
                         </div>
                         <input type="range" id="soil-slider" min="1" max="10" value="5" oninput="updateSoil()">
                     </div>
@@ -287,7 +323,7 @@
                 
                 <div class="bg-red-950/20 p-6 rounded-3xl border-2 border-red-600 italic">
                     <label class="flex gap-4 cursor-pointer items-start">
-                        <input type="checkbox" id="disclaimer-check" required class="w-6 h-6 accent-red-600 mt-1" onchange="toggleSubmit()">
+                        <input type="checkbox" id="disclaimer-check" required class="w-8 h-8 accent-red-600 mt-1" onchange="toggleSubmit()">
                         <span class="text-[10px] font-black text-white leading-relaxed italic uppercase tracking-tighter">Final pricing verified upon inspection. Excessive soil adjustments agreed before start.</span>
                     </label>
                 </div>
@@ -306,7 +342,6 @@
             <div class="glass p-10 rounded-[40px] border-red-900 reveal" data-tilt><p class="text-white text-base italic mb-8 font-black italic">"Professional, successful studio. No surprises on price. Highly recommend."</p><div class="font-sync text-[10px] text-red-600">— Jason D.</div></div>
         </div>
 
-        <!-- FIXED: GOOGLE REVIEW SECTION -->
         <div class="max-w-3xl mx-auto glass p-8 md:p-20 rounded-[50px] md:rounded-[80px] text-center border-red-600 shadow-3xl reveal flex flex-col items-center">
             <div class="flex justify-center gap-1 mb-8">
                 <span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span>
@@ -343,7 +378,6 @@
             document.body.style.overflow = el.classList.contains('open') ? 'hidden' : 'auto';
         }
 
-        /* SCROLL REVEAL LOGIC */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
