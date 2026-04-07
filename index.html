@@ -23,14 +23,11 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        .font-sync { font-family: 'Syncopate', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
+        .font-sync { font-family: 'Syncopate', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; }
 
         /* SCROLL REVEAL ANIMATIONS */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.8s ease; }
-        .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.8s ease; }
-        .reveal-left.active, .reveal-right.active { opacity: 1; transform: translateX(0); }
 
         /* THE VISIBLE RACE TRACK & CAR */
         .race-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
@@ -41,29 +38,39 @@
 
         /* GLASS BOXES */
         .glass { background: rgba(10, 10, 10, 0.95); border: 2px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
-        .tilt-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-style: preserve-3d; }
         
         /* OVERLAY TRANSITIONS */
-        .overlay-page { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); transform: scale(1.1); opacity: 0; pointer-events: none; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+        .overlay-page { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); transform: scale(1.05); opacity: 0; pointer-events: none; transition: all 0.4s ease; overflow-y: auto; }
         .overlay-page.open { transform: scale(1); opacity: 1; pointer-events: auto; }
 
         /* BUTTONS */
-        .btn-red { background: linear-gradient(135deg, var(--red-deep) 0%, #4a0000 100%); border: 2px solid var(--red-sharp); box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; }
-        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 0, 0, 0.6); background: var(--red-sharp); }
+        .btn-red { background: linear-gradient(135deg, var(--red-deep) 0%, #4a0000 100%); border: 1px solid var(--red-sharp); transition: all 0.3s ease; }
+        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); background: var(--red-sharp); }
 
         /* SCANNING LASER EFFECT */
-        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--red-sharp); box-shadow: 0 0 20px var(--red-sharp); opacity: 0; z-index: 1000; pointer-events: none; }
-        .scanning .scan-line { animation: scan-move 1.5s ease-in-out; opacity: 1; }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--red-sharp); box-shadow: 0 0 15px var(--red-sharp); opacity: 0; z-index: 1000; pointer-events: none; }
+        .scanning .scan-line { animation: scan-move 1s ease-in-out; opacity: 1; }
         @keyframes scan-move { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* DATE PICKER VISUAL FEEDBACK */
+        .active-date { 
+            background-color: var(--red-sharp) !important; 
+            border-color: #fff !important;
+            color: #fff !important;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--red-sharp);
+        }
 
         /* CUSTOM SLIDER */
         input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; height: 50px; width: 100%; }
-        input[type=range]::-webkit-slider-runnable-track { height: 10px; background: #1a1a1a; border-radius: 10px; border: 1px solid #444; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 34px; width: 34px; border-radius: 50%; background: #fff; margin-top: -12px; border: 4px solid var(--red-sharp); box-shadow: 0 0 30px var(--red-sharp); }
+        input[type=range]::-webkit-slider-runnable-track { height: 8px; background: #1a1a1a; border-radius: 10px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 30px; width: 30px; border-radius: 50%; background: #fff; margin-top: -11px; border: 3px solid var(--red-sharp); box-shadow: 0 0 20px var(--red-sharp); }
 
         @media (max-width: 768px) {
-            .mobile-title { font-size: 1.8rem !important; line-height: 1.2 !important; }
+            .mobile-title { font-size: 1.65rem !important; line-height: 1.2 !important; }
+            .nav-link { font-size: 10px !important; letter-spacing: 0.05em !important; }
             .car-group { animation-duration: 8s; }
+            .glass { border-width: 1.5px; }
         }
     </style>
 </head>
@@ -90,112 +97,112 @@
     </div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-[100] px-4 md:px-8 py-5 flex justify-between items-center glass border-b border-white/10">
+    <nav class="fixed top-0 w-full z-[100] px-3 md:px-8 py-3 md:py-5 flex justify-between items-center glass border-b border-white/10">
         <a href="#" class="flex items-center">
-            <img src="logo.png" alt="BLYNCH DETAILS" class="h-10 md:h-14">
+            <img src="logo.png" alt="Blynch Details" class="h-7 md:h-14">
         </a>
-        <div class="flex gap-4 md:gap-12 items-center font-sync text-[9px] md:text-[12px]">
-            <button onclick="toggleOverlay('service-page')" class="hover:text-red-500 transition italic font-bold">Services</button>
-            <button onclick="toggleOverlay('contact-page')" class="hover:text-red-500 transition italic font-bold">Contact</button>
-            <a href="#booking-start" class="btn-red text-white px-6 md:px-12 py-3 rounded-full italic font-black tracking-widest">BOOK</a>
+        <div class="flex gap-3 md:gap-10 items-center font-sync">
+            <button onclick="toggleOverlay('service-page')" class="nav-link text-[9px] md:text-[11px] hover:text-red-500 transition italic">Services</button>
+            <button onclick="toggleOverlay('contact-page')" class="nav-link text-[9px] md:text-[11px] hover:text-red-500 transition italic">Contact</button>
+            <a href="#booking-start" class="btn-red text-white px-4 md:px-10 py-2 md:py-3 rounded-full italic font-black text-[9px] md:text-[11px] tracking-widest">BOOK</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
     <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 italic reveal">
-        <img src="logo.png" alt="BLYNCH DETAILS" class="h-44 sm:h-64 md:h-80 mx-auto mb-10 drop-shadow-[0_0_40px_rgba(255,0,0,0.4)]">
-        <h1 class="font-sync text-2xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-6 mobile-title">
+        <img src="logo.png" alt="BLYNCH DETAILS" class="h-40 sm:h-64 md:h-80 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(255,0,0,0.3)]">
+        <h1 class="font-sync text-2xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-4 mobile-title">
             PERFECTION LIVES IN<br><span class="text-red-600">THE SMALL DETAILS.</span>
         </h1>
-        <p class="text-[12px] md:text-sm text-gray-300 max-w-xl mx-auto italic font-black tracking-[0.3em] mb-12 uppercase leading-relaxed">
+        <p class="text-[11px] md:text-sm text-gray-300 max-w-xl mx-auto italic font-bold tracking-[0.2em] md:tracking-[0.3em] mb-12 uppercase leading-relaxed">
             Houston's Private Interior Restoration Studio.
         </p>
-        <div class="flex flex-col sm:flex-row gap-6">
-            <a href="#booking-start" class="font-sync bg-white text-black px-14 py-6 rounded-full text-[12px] font-black hover:bg-red-600 hover:text-white transition-all shadow-2xl scale-105 italic">Begin Protocol</a>
-            <button onclick="toggleOverlay('service-page')" class="font-sync glass text-white px-14 py-6 rounded-full text-[12px] font-black italic">Learn More</button>
+        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto">
+            <a href="#booking-start" class="font-sync bg-white text-black px-8 py-5 rounded-full text-[10px] font-black hover:bg-red-600 hover:text-white transition-all shadow-2xl italic">Begin Protocol</a>
+            <button onclick="toggleOverlay('service-page')" class="font-sync glass text-white px-8 py-5 rounded-full text-[10px] font-black italic">Learn More</button>
         </div>
     </section>
 
     <!-- THE BLYNCH PROTOCOL -->
-    <section class="py-24 md:py-40 px-6 relative z-10 perspective-view italic">
+    <section class="py-20 md:py-40 px-6 relative z-10 italic">
         <div class="max-w-7xl mx-auto text-center">
-            <h2 class="font-sync text-[14px] text-red-600 font-black mb-4 tracking-widest reveal">The Blynch Protocol</h2>
-            <h3 class="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-20 reveal">Surgical Standards.</h3>
+            <h2 class="font-sync text-[12px] md:text-[14px] text-red-600 font-black mb-4 tracking-widest reveal">The Blynch Protocol</h2>
+            <h3 class="text-3xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-16 md:mb-24 reveal">Surgical Standards.</h3>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal-left" data-tilt>
-                    <h4 class="font-sync text-sm text-red-500 font-black mb-6">01. Zero Judgment</h4>
-                    <p class="text-white text-base md:text-lg leading-relaxed font-bold italic">Whether it's family chaos or a work-truck disaster, our studio is a focused "Reset" zone.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+                <div class="glass p-8 md:p-12 rounded-[30px] border-l-8 border-red-700 reveal" data-tilt>
+                    <h4 class="font-sync text-xs text-red-500 font-black mb-6 italic">01. Zero Judgment</h4>
+                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">Whether it's family chaos or a work-truck disaster, our studio is a focused "Reset" zone.</p>
                 </div>
-                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-sm text-red-500 font-black mb-6">02. Surgical Depth</h4>
-                    <p class="text-white text-base md:text-lg leading-relaxed font-bold italic">We target tracks, vents, and internal crevices. We detail what others ignore.</p>
+                <div class="glass p-8 md:p-12 rounded-[30px] border-l-8 border-red-700 reveal" data-tilt>
+                    <h4 class="font-sync text-xs text-red-500 font-black mb-6 italic">02. Surgical Depth</h4>
+                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">We target tracks, vents, and internal crevices. We detail what others ignore.</p>
                 </div>
-                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal-right" data-tilt>
-                    <h4 class="font-sync text-sm text-red-500 font-black mb-6">03. Clinical Gear</h4>
-                    <p class="text-white text-base md:text-lg leading-relaxed font-bold italic">Medical-grade steam and high-heat extraction to vaporize odors at the molecular level.</p>
+                <div class="glass p-8 md:p-12 rounded-[30px] border-l-8 border-red-700 reveal" data-tilt>
+                    <h4 class="font-sync text-xs text-red-500 font-black mb-6 italic">03. Clinical Gear</h4>
+                    <p class="text-white text-sm md:text-lg leading-relaxed font-bold italic">Medical-grade steam and high-heat extraction to vaporize odors at the molecular level.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- BOOKING ENGINE -->
-    <section id="booking-start" class="py-24 px-6 relative z-10 italic reveal">
+    <section id="booking-start" class="py-20 md:py-24 px-6 relative z-10 italic reveal">
         <div class="max-w-5xl mx-auto text-center">
-            <h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest">Step I. Identification</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
-                <div onclick="setSize('Sedan', 0)" id="size-0" class="step-card glass p-12 rounded-3xl font-sync text-[13px] italic font-black">Sedan / Coupe</div>
-                <div onclick="setSize('2Row', 1)" id="size-1" class="step-card glass p-12 rounded-3xl font-sync text-[13px] italic font-black">2 Row SUV</div>
-                <div onclick="setSize('3Row', 2)" id="size-2" class="step-card glass p-12 rounded-3xl font-sync text-[13px] italic font-black">3 Row / Truck</div>
+            <h2 class="font-sync text-[12px] md:text-[14px] text-red-500 font-black mb-10 md:mb-12 tracking-widest">Step I. Identification</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 md:mb-24">
+                <div onclick="setSize('Sedan', 0)" id="size-0" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[11px] md:text-[13px] italic font-black">Sedan / Coupe</div>
+                <div onclick="setSize('2Row', 1)" id="size-1" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[11px] md:text-[13px] italic font-black">2 Row SUV</div>
+                <div onclick="setSize('3Row', 2)" id="size-2" class="step-card glass p-8 md:p-12 rounded-3xl font-sync text-[11px] md:text-[13px] italic font-black">3 Row / Truck</div>
             </div>
 
             <div id="package-section" class="hidden opacity-0 transition-all duration-1000">
-                <h2 class="font-sync text-[14px] text-red-500 font-black text-center mb-12 tracking-widest">Step II. Mission Tier</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div onclick="openConfig('basic')" class="glass p-12 rounded-[50px] group border-white/20 hover:border-red-600 transition cursor-pointer" data-tilt>
-                        <h3 class="font-sync text-2xl text-white mb-2 italic">The Basic Refresh</h3>
-                        <div id="price-basic" class="font-sync text-4xl text-red-600 font-black mt-4 italic">$120</div>
-                        <button class="mt-12 w-full bg-white text-black font-sync py-5 rounded-full text-[12px] font-black italic">Select Protocol</button>
+                <h2 class="font-sync text-[12px] md:text-[14px] text-red-500 font-black text-center mb-10 md:mb-12 tracking-widest">Step II. Mission Tier</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                    <div onclick="openConfig('basic')" class="glass p-10 md:p-12 rounded-[40px] group border-white/20 hover:border-red-600 transition cursor-pointer">
+                        <h3 class="font-sync text-xl md:text-2xl text-white mb-2 italic">Basic Refresh</h3>
+                        <div id="price-basic" class="font-sync text-3xl md:text-4xl text-red-600 font-black mt-4">$120</div>
+                        <button class="mt-10 md:mt-12 w-full bg-white text-black font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Select Protocol</button>
                     </div>
-                    <div onclick="openConfig('benchmark')" class="glass p-12 rounded-[50px] group border-red-700 shadow-2xl transition cursor-pointer" data-tilt>
-                        <h3 class="font-sync text-2xl text-white mb-2 italic">Blynch Benchmark</h3>
-                        <div id="price-benchmark" class="font-sync text-4xl text-red-600 font-black mt-4 italic">$150</div>
-                        <button class="mt-12 w-full btn-red text-white font-sync py-5 rounded-full text-[12px] font-black italic">Select Protocol</button>
+                    <div onclick="openConfig('benchmark')" class="glass p-10 md:p-12 rounded-[40px] group border-red-700 shadow-2xl transition cursor-pointer">
+                        <h3 class="font-sync text-xl md:text-2xl text-white mb-2 italic">Benchmark</h3>
+                        <div id="price-benchmark" class="font-sync text-3xl md:text-4xl text-red-600 font-black mt-4">$150</div>
+                        <button class="mt-10 md:mt-12 w-full btn-red text-white font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Select Protocol</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT US / FOUNDER -->
-    <section id="about" class="py-32 md:py-48 px-6 glass rounded-t-[60px] md:rounded-t-[120px] relative z-10 italic reveal">
+    <!-- ABOUT US -->
+    <section id="about" class="py-24 md:py-48 px-6 glass rounded-t-[60px] md:rounded-t-[120px] relative z-10 italic reveal">
         <div class="max-w-4xl mx-auto italic text-center">
-            <h2 class="font-sync text-[14px] text-red-500 font-black mb-6 tracking-widest">The Studio & Founder</h2>
-            <h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-16 leading-tight italic">Built On <span class="text-red-700">Discipline.</span></h3>
+            <h2 class="font-sync text-[12px] md:text-[14px] text-red-500 font-black mb-6 tracking-widest italic">The Studio & Founder</h2>
+            <h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-12 md:mb-16 leading-tight">Built On <span class="text-red-700">Discipline.</span></h3>
             <div class="space-y-12 text-white text-lg md:text-xl font-bold leading-relaxed text-left md:text-center italic">
-                <p>Blynch Details was founded on a drive for mastery. Nearly two years ago, I launched this studio to provide the Houston area with an interior restoration standard that simply didn't exist in high-volume shops.</p>
-                <p>As a <span class="text-red-500">16-year-old entrepreneur</span>, I approach every project with business discipline and uncompromising attention to detail. Every vehicle that enters my professional garage studio is treated with the same precision I would expect for my own vehicle.</p>
+                <p>Blynch Details was founded on a drive for mastery. Nearly two years ago, I launched this studio to provide Houston with an interior restoration standard that simply didn't exist in high-volume shops.</p>
+                <p>As a <span class="text-red-500">16-year-old entrepreneur</span>, I approach every project with business discipline and uncompromising attention to detail. Every vehicle that enters my studio is treated with the same precision I would expect for my own vehicle.</p>
             </div>
         </div>
     </section>
 
     <!-- SERVICE OVERLAY -->
     <div id="service-page" class="overlay-page italic">
-        <div class="max-w-4xl mx-auto px-6 py-24">
-            <button onclick="toggleOverlay('service-page')" class="fixed top-8 right-8 font-sync text-red-600 font-black text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button>
-            <h2 class="font-sync text-4xl md:text-6xl text-white mb-16 italic leading-tight">Service<br><span class="text-red-600">Specifications.</span></h2>
-            <div class="space-y-20">
-                <div class="glass p-12 rounded-[50px] border-white/40 italic">
-                    <h3 class="font-sync text-2xl text-red-600 mb-8 italic">The Basic Refresh</h3>
-                    <ul class="space-y-6 text-base text-white font-black italic">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="toggleOverlay('service-page')" class="fixed top-6 right-6 font-sync text-red-600 font-black text-[10px] bg-white text-black px-5 py-3 rounded-full z-[600]">CLOSE [X]</button>
+            <h2 class="font-sync text-3xl md:text-6xl text-white mb-16 italic">Service<br><span class="text-red-600">Breakdown.</span></h2>
+            <div class="space-y-16">
+                <div class="glass p-8 md:p-12 rounded-[40px]">
+                    <h3 class="font-sync text-xl text-red-600 mb-6 italic">The Basic Refresh</h3>
+                    <ul class="space-y-4 text-sm text-white font-bold">
                         <li>• Debris Extraction & Trash Removal</li><li>• High-Power Multi-Point Vacuum</li><li>• pH-Neutral Surface Reset</li><li>• Streak-Free Clarity Windows</li><li>• Signature Air Restoration Scent</li>
                     </ul>
                 </div>
-                <div class="glass p-12 rounded-[50px] border-red-600 italic">
-                    <h3 class="font-sync text-2xl text-red-600 mb-8 italic">The Blynch Benchmark</h3>
-                    <ul class="space-y-6 text-base text-white font-black italic">
-                        <li class="text-red-500 underline decoration-red-600 text-xl font-black uppercase">Includes Basic Plus:</li>
-                        <li>• Vapor Steam Restoration (Vents/Plastics)</li><li>• Hot Water Carpet & Fabric Extraction</li><li>• Targeted Stain Remediation Protocol</li><li>• Surgical Detailing of All Crevices</li>
+                <div class="glass p-8 md:p-12 rounded-[40px] border-red-600">
+                    <h3 class="font-sync text-xl text-red-600 mb-6 italic">The Blynch Benchmark</h3>
+                    <ul class="space-y-4 text-sm text-white font-bold">
+                        <li class="text-red-500 underline decoration-red-600 font-black italic">INCLUDES BASIC PLUS:</li>
+                        <li>• Vapor Steam Restoration</li><li>• Hot Water Extraction</li><li>• Targeted Stain Remediation</li><li>• Surgical Detailing of Crevices</li>
                     </ul>
                 </div>
             </div>
@@ -204,24 +211,24 @@
 
     <!-- CONTACT OVERLAY -->
     <div id="contact-page" class="overlay-page italic">
-        <div class="max-w-4xl mx-auto px-6 py-24">
-            <button onclick="toggleOverlay('contact-page')" class="fixed top-8 right-8 font-sync text-red-600 font-black text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button>
-            <h2 class="font-sync text-4xl md:text-6xl text-white mb-20 italic">Connect<br><span class="text-red-700">Studio.</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div class="space-y-12">
-                    <div class="glass p-10 rounded-3xl border-red-600">
-                        <h3 class="text-red-600 font-sync text-xs mb-4">Phone Protocol</h3>
-                        <a href="tel:7245998113" class="text-3xl font-black text-white hover:text-red-500 italic">724-599-8113</a>
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="toggleOverlay('contact-page')" class="fixed top-6 right-6 font-sync text-red-600 font-black text-[10px] bg-white text-black px-5 py-3 rounded-full z-[600]">CLOSE [X]</button>
+            <h2 class="font-sync text-3xl md:text-6xl text-white mb-16 italic">Connect<br><span class="text-red-700">Studio.</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-8">
+                    <div class="glass p-8 rounded-3xl border-red-600">
+                        <h3 class="text-red-600 font-sync text-[10px] mb-4">Phone Protocol</h3>
+                        <a href="tel:7245998113" class="text-2xl font-black text-white italic">724-599-8113</a>
                     </div>
-                    <div class="glass p-10 rounded-3xl border-red-600">
-                        <h3 class="text-red-600 font-sync text-xs mb-4">Studio Location</h3>
-                        <a href="https://www.google.com/maps/search/?api=1&query=812+McGovern+Road+Houston+PA" target="_blank" class="text-xl text-white font-black italic">812 McGovern Road, Houston, PA</a>
+                    <div class="glass p-8 rounded-3xl border-red-600">
+                        <h3 class="text-red-600 font-sync text-[10px] mb-4">Studio Location</h3>
+                        <a href="https://www.google.com/maps/search/?api=1&query=812+McGovern+Road+Houston+PA" target="_blank" class="text-lg text-white font-bold leading-relaxed italic">812 McGovern Road, Houston, PA</a>
                     </div>
                 </div>
-                <div class="glass p-10 rounded-3xl border-red-600 flex flex-col justify-center gap-10 italic">
-                    <a href="https://www.instagram.com/blynchdetails" target="_blank" class="font-sync text-lg text-white hover:text-red-500 italic">Instagram</a>
-                    <a href="https://www.tiktok.com/@blynchdetails" target="_blank" class="font-sync text-lg text-white hover:text-red-500 italic">TikTok</a>
-                    <a href="https://www.facebook.com/people/Blynch-Details/100085440788775/" target="_blank" class="font-sync text-lg text-white hover:text-red-500 italic">Facebook</a>
+                <div class="glass p-8 rounded-3xl border-red-600 flex flex-col justify-center gap-6 italic font-bold">
+                    <a href="https://www.instagram.com/blynchdetails" target="_blank" class="text-white hover:text-red-500">Instagram: @blynchdetails</a>
+                    <a href="https://www.tiktok.com/@blynchdetails" target="_blank" class="text-white hover:text-red-500">TikTok: @blynchdetails</a>
+                    <a href="https://www.facebook.com/people/Blynch-Details/100085440788775/" target="_blank" class="text-white hover:text-red-500">Facebook</a>
                 </div>
             </div>
         </div>
@@ -230,91 +237,96 @@
     <!-- CONFIGURATOR TRAY -->
     <div id="config-modal" class="fixed inset-0 modal-overlay z-[600] hidden flex items-end md:items-center justify-center p-0 md:p-4 italic">
         <div id="config-tray" class="glass border-t-4 md:border-4 border-red-700 w-full max-w-3xl rounded-t-[40px] md:rounded-[60px] overflow-hidden flex flex-col max-h-[92vh] tray-anim">
-            <div class="p-8 md:p-12 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-red-900/40 to-transparent">
-                <h2 class="font-sync text-xl text-white font-black italic">Diagnostic Suite</h2>
-                <button onclick="closeConfig()" class="text-white text-4xl">✕</button>
+            <div class="p-6 md:p-10 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-red-900/40 to-transparent">
+                <h2 class="font-sync text-lg md:text-xl text-white font-black italic">Diagnostic Suite</h2>
+                <button onclick="closeConfig()" class="text-white text-3xl">✕</button>
             </div>
-            <div class="p-8 md:p-12 overflow-y-auto space-y-16">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 italic">
-                    <div class="p-10 rounded-3xl border-2 border-red-600 flex justify-between items-center bg-black">
-                        <div><h4 class="font-sync text-[12px] text-red-500 font-black italic">Pet Hair?</h4><p class="text-[11px] text-white italic font-black uppercase">Static Lift (+$20)</p></div>
+            <div class="p-6 md:p-10 overflow-y-auto space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 italic">
+                    <div class="p-8 rounded-3xl border-2 border-red-600 flex justify-between items-center bg-black">
+                        <div><h4 class="font-sync text-[11px] text-red-500 font-black italic">Pet Hair?</h4><p class="text-[10px] text-white italic font-black uppercase">Static Lift (+$20)</p></div>
                         <input type="checkbox" id="pet-hair-toggle" class="w-16 h-8 accent-red-600" onchange="calculate()">
                     </div>
-                    <div class="p-10 rounded-3xl border-2 border-white/20 bg-black">
+                    <div class="p-8 rounded-3xl border-2 border-white/20 bg-black">
                         <div class="flex justify-between items-center mb-6 italic">
-                            <h4 class="font-sync text-[12px] text-red-500 font-black">Soil Gauge</h4>
-                            <span id="soil-val" class="font-sync text-xl text-white font-black italic">5/10</span>
+                            <h4 class="font-sync text-[11px] text-red-500 font-black">Soil Gauge</h4>
+                            <span id="soil-val" class="font-sync text-lg text-white font-black italic">5/10</span>
                         </div>
                         <input type="range" id="soil-slider" min="1" max="10" value="5" oninput="updateSoil()">
                     </div>
                 </div>
-                <div id="addon-list" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                <div id="addon-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold italic text-white"></div>
             </div>
-            <div class="p-10 bg-black border-t-2 border-red-600 flex justify-between items-center">
-                <div><p class="font-sync text-[11px] text-red-600 font-black italic">EST. TOTAL</p><h3 id="total-price" class="font-sync text-3xl md:text-5xl text-white font-black">$0</h3></div>
-                <button onclick="openBooking()" class="btn-red text-white px-10 md:px-16 py-5 rounded-full text-[12px] font-black italic">CONTINUE</button>
+            <div class="p-8 bg-black border-t-2 border-red-600 flex justify-between items-center italic">
+                <div><p class="font-sync text-[10px] text-red-600 font-black italic">EST. TOTAL</p><h3 id="total-price" class="font-sync text-2xl md:text-5xl text-white font-black">$0</h3></div>
+                <button onclick="openBooking()" class="btn-red text-white px-8 md:px-14 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black italic">CONTINUE</button>
             </div>
         </div>
     </div>
 
     <!-- BOOKING MODAL -->
-    <div id="booking-modal" class="fixed inset-0 modal-overlay z-[700] hidden flex items-center justify-center p-4 italic">
-        <div class="glass w-full max-w-xl p-10 md:p-16 rounded-[40px] md:rounded-[60px] border-red-600 bg-black overflow-y-auto max-h-[90vh]">
-            <h2 class="font-sync text-2xl text-white mb-10 text-center font-black">Request Slot</h2>
-            <form action="https://formspree.io/f/xvzvwvzl" method="POST" class="space-y-6">
+    <div id="booking-modal" class="fixed inset-0 modal-overlay z-[700] hidden flex items-center justify-center p-3 italic">
+        <div class="glass w-full max-w-xl p-6 md:p-12 rounded-[40px] md:rounded-[60px] border-red-600 bg-black overflow-y-auto max-h-[90vh]">
+            <h2 class="font-sync text-xl text-white mb-8 text-center font-black">Request Slot</h2>
+            <form action="https://formspree.io/f/xvzvwvzl" method="POST" class="space-y-5">
                 <input type="hidden" name="Price" id="form-total"><input type="hidden" name="Size" id="form-size">
                 <input type="hidden" name="Tier" id="form-tier"><input type="hidden" name="Soil" id="form-soil">
                 <input type="hidden" name="Dates" id="form-dates"><input type="hidden" name="Addons" id="form-addons">
                 
-                <div id="date-grid" class="grid grid-cols-4 md:grid-cols-7 gap-3 mb-10 font-bold italic"></div>
-                <div class="space-y-5">
-                    <input type="text" name="Client" placeholder="Your Name" required class="w-full bg-black border-2 border-white/20 p-5 rounded-2xl text-white font-black italic">
-                    <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full bg-black border-2 border-white/20 p-5 rounded-2xl text-white font-black italic">
-                    <textarea name="Vehicle" placeholder="Year, Make, Model" required class="w-full bg-black border-2 border-white/20 p-5 rounded-2xl text-white h-24 font-black italic"></textarea>
+                <div>
+                    <h4 class="text-[10px] font-sync text-red-600 mb-4 text-center italic">Select 2-3 Target Dates</h4>
+                    <div id="date-grid" class="grid grid-cols-4 md:grid-cols-7 gap-2 mb-2 font-bold italic"></div>
+                    <p id="selected-dates-text" class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest font-black">No dates selected</p>
+                </div>
+
+                <div class="space-y-4">
+                    <input type="text" name="Client" placeholder="Your Name" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic">
+                    <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic">
+                    <textarea name="Vehicle" placeholder="Year, Make, Model" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white h-20 font-bold italic"></textarea>
                 </div>
                 
-                <div class="bg-red-950 p-8 rounded-3xl border-2 border-red-600 italic">
+                <div class="bg-red-950/20 p-6 rounded-3xl border-2 border-red-600 italic">
                     <label class="flex gap-4 cursor-pointer items-start">
-                        <input type="checkbox" id="disclaimer-check" required class="w-8 h-8 accent-red-600 mt-1" onchange="toggleSubmit()">
-                        <span class="text-[12px] font-black text-white leading-relaxed italic uppercase tracking-tighter">Final pricing verified upon inspection. Excessive soil adjustments agreed before start.</span>
+                        <input type="checkbox" id="disclaimer-check" required class="w-6 h-6 accent-red-600 mt-1" onchange="toggleSubmit()">
+                        <span class="text-[10px] font-black text-white leading-relaxed italic uppercase tracking-tighter">Final pricing verified upon inspection. Excessive soil adjustments agreed before start.</span>
                     </label>
                 </div>
-                <button type="submit" id="submit-btn" disabled class="font-sync w-full bg-zinc-800 text-zinc-500 py-6 rounded-full text-[12px] font-black italic">SEND PROTOCOL</button>
+                <button type="submit" id="submit-btn" disabled class="font-sync w-full bg-zinc-800 text-zinc-500 py-6 rounded-full text-[11px] font-black italic">SEND PROTOCOL</button>
             </form>
-            <button onclick="closeBooking()" class="w-full mt-6 text-[12px] font-black text-red-600 uppercase tracking-widest text-center italic">BACK</button>
+            <button onclick="closeBooking()" class="w-full mt-4 text-[10px] font-black text-red-600 uppercase text-center italic">BACK</button>
         </div>
     </div>
 
     <!-- TESTIMONIALS & GOOGLE REVIEW -->
-    <section class="py-24 md:py-48 px-6 relative z-10 italic">
-        <h2 class="font-sync text-[12px] md:text-[14px] text-red-600 font-bold text-center mb-24 tracking-[0.4em] reveal">Success Stories</h2>
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 italic">
-            <div class="glass p-12 rounded-[50px] border-red-900 reveal-left" data-tilt><p class="text-white text-lg italic mb-10 font-black">"Benchmark reset made my SUV look showroom floor new. Incredible detail!"</p><div class="font-sync text-[12px] text-red-600 italic">— Sarah M.</div></div>
-            <div class="glass p-12 rounded-[50px] border-red-900 reveal" data-tilt><p class="text-white text-lg italic mb-10 font-black">"Clinical attention to detail. Every vent was perfect. Best in Houston."</p><div class="font-sync text-[12px] text-red-600 italic">— Mike R.</div></div>
-            <div class="glass p-12 rounded-[50px] border-red-900 reveal-right" data-tilt><p class="text-white text-lg italic mb-10 font-black">"Professional, successful studio. No surprises on price. Highly recommend."</p><div class="font-sync text-[12px] text-red-600 italic">— Jason D.</div></div>
+    <section class="py-20 md:py-48 px-6 relative z-10 italic">
+        <h2 class="font-sync text-[12px] md:text-[14px] text-red-600 font-black text-center mb-20 tracking-[0.4em] reveal">Success Stories</h2>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 italic mb-32">
+            <div class="glass p-10 rounded-[40px] border-red-900 reveal" data-tilt><p class="text-white text-base italic mb-8 font-black italic">"Benchmark reset made my SUV look showroom floor new. Incredible detail!"</p><div class="font-sync text-[10px] text-red-600">— Sarah M.</div></div>
+            <div class="glass p-10 rounded-[40px] border-red-900 reveal" data-tilt><p class="text-white text-base italic mb-8 font-black italic">"Clinical attention to detail. Every vent was perfect. Best in Houston."</p><div class="font-sync text-[10px] text-red-600">— Mike R.</div></div>
+            <div class="glass p-10 rounded-[40px] border-red-900 reveal" data-tilt><p class="text-white text-base italic mb-8 font-black italic">"Professional, successful studio. No surprises on price. Highly recommend."</p><div class="font-sync text-[10px] text-red-600">— Jason D.</div></div>
         </div>
 
-        <!-- UPDATED: GOOGLE REVIEW REQUEST -->
-        <div class="mt-40 max-w-2xl mx-auto glass p-14 md:p-24 rounded-[60px] text-center border-red-600 shadow-2xl reveal">
+        <!-- FIXED: GOOGLE REVIEW SECTION -->
+        <div class="max-w-3xl mx-auto glass p-8 md:p-20 rounded-[50px] md:rounded-[80px] text-center border-red-600 shadow-3xl reveal flex flex-col items-center">
             <div class="flex justify-center gap-1 mb-8">
-                <span class="text-yellow-500 text-2xl">★</span><span class="text-yellow-500 text-2xl">★</span><span class="text-yellow-500 text-2xl">★</span><span class="text-yellow-500 text-2xl">★</span><span class="text-yellow-500 text-2xl">★</span>
+                <span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span>
             </div>
-            <h2 class="font-sync text-2xl md:text-4xl text-white mb-6 italic font-black italic">Rate The Protocol.</h2>
-            <p class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-12 italic">Share your results and help our Houston studio grow.</p>
-            <a href="https://g.page/r/CXpGlc5ck74CEBM/review" target="_blank" class="btn-red text-white px-14 py-6 rounded-full font-sync text-[11px] font-black italic">Leave Google Review</a>
+            <h2 class="font-sync text-xl md:text-4xl text-white mb-6 italic font-black italic">Rate The Protocol.</h2>
+            <p class="text-gray-300 font-bold uppercase tracking-widest text-[10px] md:text-xs mb-10 italic max-w-sm">Share your results and help our Houston studio grow.</p>
+            <a href="https://g.page/r/CXpGlc5ck74CEBM/review" target="_blank" class="btn-red text-white px-10 md:px-20 py-5 rounded-full font-sync text-[10px] md:text-[12px] font-black italic w-full sm:w-auto">Leave Review</a>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-32 px-10 border-t border-red-900 relative z-10 text-center bg-black italic">
-        <div class="mb-14 flex justify-center"><img src="logo.png" alt="BLYNCH DETAILS" class="h-14"></div>
-        <a href="tel:7245998113" class="font-sync text-2xl md:text-5xl text-white block mb-10 hover:text-red-500 font-black tracking-tighter italic">724-599-8113</a>
-        <div class="flex justify-center gap-10 font-sync text-[14px] text-red-600 font-black mb-20 italic underline decoration-red-900 italic">
+    <footer class="py-24 px-10 border-t border-red-950 relative z-10 text-center bg-black italic">
+        <div class="mb-14 flex justify-center"><img src="logo.png" alt="BLYNCH DETAILS" class="h-10 md:h-14 opacity-80"></div>
+        <a href="tel:7245998113" class="font-sync text-2xl md:text-5xl text-white block mb-10 hover:text-red-500 italic font-black tracking-tighter italic">724-599-8113</a>
+        <div class="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 font-sync text-[12px] text-red-600 font-bold mb-16">
             <a href="https://www.instagram.com/blynchdetails" target="_blank">Instagram</a>
             <a href="https://www.tiktok.com/@blynchdetails" target="_blank">TikTok</a>
             <a href="https://www.facebook.com/people/Blynch-Details/100085440788775/" target="_blank">Facebook</a>
         </div>
-        <p class="font-sync text-[10px] text-gray-500 italic italic">© 2024 Blynch Details • Interior Restoration Protocol • Houston, PA</p>
+        <p class="font-sync text-[10px] text-gray-600 opacity-60 italic">© 2024 Blynch Details • Interior Restoration Protocol • Houston, PA</p>
     </footer>
 
     <script>
@@ -332,88 +344,4 @@
         }
 
         /* SCROLL REVEAL LOGIC */
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
-
-        function setSize(size, idx) {
-            document.getElementById('form-size').value = size;
-            document.querySelectorAll('#booking-start .step-card').forEach((c, i) => i < 3 ? c.classList.remove('active-size') : null);
-            document.getElementById(`size-${idx}`).classList.add('active-size');
-            const p = size === 'Sedan' ? [120, 150] : (size === '2Row' ? [150, 180] : [180, 210]);
-            document.getElementById('price-basic').innerText = `$${p[0]}`;
-            document.getElementById('price-benchmark').innerText = `$${p[1]}`;
-            document.getElementById('package-section').classList.remove('hidden');
-            setTimeout(() => document.getElementById('package-section').classList.add('opacity-100'), 50);
-        }
-
-        function openConfig(tier) {
-            document.body.classList.add('scanning');
-            setTimeout(() => {
-                document.body.classList.remove('scanning');
-                document.getElementById('form-tier').value = (tier === 'basic' ? 'Basic Refresh' : 'Blynch Benchmark');
-                const sizeIndex = document.querySelector('.active-size').id.split('-')[1];
-                currentBase = prices[tier][sizeIndex];
-                const list = document.getElementById('addon-list');
-                list.innerHTML = '';
-                addonsData[tier].forEach(a => {
-                    list.innerHTML += `<div class="flex items-center justify-between p-8 glass border-red-600 rounded-3xl transition hover:bg-red-950"><span class="font-sync text-[12px] text-white addon-name font-black italic">${a.name}</span><div class="flex items-center gap-6"><span class="font-sync text-[14px] text-red-500 font-black italic">$${a.p}</span><input type="checkbox" onchange="calculate()" class="addon-check w-8 h-8 accent-red-600" data-price="${a.p}"></div></div>`;
-                });
-                document.getElementById('config-modal').classList.remove('hidden');
-                setTimeout(() => document.getElementById('config-tray').classList.add('tray-show'), 10);
-                document.body.style.overflow = 'hidden';
-                calculate();
-            }, 800);
-        }
-
-        function closeConfig() { document.getElementById('config-tray').classList.remove('tray-show'); setTimeout(() => document.getElementById('config-modal').classList.add('hidden'), 700); document.body.style.overflow = 'auto'; }
-
-        function updateSoil() { const val = document.getElementById('soil-slider').value; document.getElementById('soil-val').innerText = `${val}/10`; document.getElementById('form-soil').value = val; }
-
-        function calculate() {
-            let total = currentBase; if (document.getElementById('pet-hair-toggle').checked) total += 20;
-            const addonNames = []; document.querySelectorAll('.addon-check:checked').forEach(c => { total += parseInt(c.getAttribute('data-price')); addonNames.push(c.closest('div.group').querySelector('.addon-name').innerText); });
-            document.getElementById('total-price').innerText = `$${total}`;
-            document.getElementById('form-total').value = `$${total}`;
-            document.getElementById('form-addons').value = addonNames.join(', ');
-        }
-
-        function openBooking() { document.getElementById('config-modal').classList.add('hidden'); document.getElementById('booking-modal').classList.remove('hidden'); genDates(); }
-
-        function genDates() {
-            const grid = document.getElementById('date-grid'); grid.innerHTML = '';
-            const today = new Date();
-            for(let i=1; i<=14; i++) {
-                const date = new Date(); date.setDate(today.getDate() + i);
-                const day = date.toLocaleString('en-us', {weekday: 'short'});
-                const num = date.getDate(); const full = date.toLocaleDateString();
-                const btn = document.createElement('div');
-                btn.className = "glass p-4 text-center rounded-xl cursor-pointer step-card font-sync text-[10px] font-black";
-                btn.innerHTML = `<div>${day}</div><div>${num}</div>`;
-                btn.onclick = () => {
-                    if (selectedDates.includes(full)) { selectedDates = selectedDates.filter(d => d !== full); btn.classList.remove('active-date'); }
-                    else if (selectedDates.length < 3) { selectedDates.push(full); btn.classList.add('active-date'); }
-                    document.getElementById('form-dates').value = selectedDates.join(', ');
-                };
-                grid.appendChild(btn);
-            }
-        }
-
-        function toggleSubmit() {
-            const check = document.getElementById('disclaimer-check').checked;
-            const btn = document.getElementById('submit-btn');
-            if(check) { btn.disabled = false; btn.classList.replace('bg-zinc-800', 'btn-red'); btn.classList.replace('text-zinc-500', 'text-white'); }
-            else { btn.disabled = true; btn.classList.replace('btn-red', 'bg-zinc-800'); btn.classList.replace('text-white', 'text-zinc-500'); }
-        }
-
-        function closeBooking() { document.getElementById('booking-modal').classList.add('hidden'); document.getElementById('config-modal').classList.remove('hidden'); }
-        
-        if (window.innerWidth > 1024) {
-            VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 5, speed: 400, glare: true, "max-glare": 0.2 });
-        }
-    </script>
-</body>
-</html>
+        con
