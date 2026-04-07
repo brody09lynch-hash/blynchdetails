@@ -344,4 +344,95 @@
         }
 
         /* SCROLL REVEAL LOGIC */
-        con
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function setSize(size, idx) {
+            document.getElementById('form-size').value = size;
+            document.querySelectorAll('#booking-start .step-card').forEach((c, i) => i < 3 ? c.classList.remove('active-size') : null);
+            document.getElementById(`size-${idx}`).classList.add('active-size');
+            const p = size === 'Sedan' ? [120, 150] : (size === '2Row' ? [150, 180] : [180, 210]);
+            document.getElementById('price-basic').innerText = `$${p[0]}`;
+            document.getElementById('price-benchmark').innerText = `$${p[1]}`;
+            document.getElementById('package-section').classList.remove('hidden');
+            setTimeout(() => document.getElementById('package-section').classList.add('opacity-100'), 50);
+        }
+
+        function openConfig(tier) {
+            document.body.classList.add('scanning');
+            setTimeout(() => {
+                document.body.classList.remove('scanning');
+                document.getElementById('form-tier').value = (tier === 'basic' ? 'Basic Refresh' : 'Blynch Benchmark');
+                const sizeIndex = document.querySelector('.active-size').id.split('-')[1];
+                currentBase = prices[tier][sizeIndex];
+                const list = document.getElementById('addon-list');
+                list.innerHTML = '';
+                addonsData[tier].forEach(a => {
+                    list.innerHTML += `<div class="flex items-center justify-between p-6 glass border-red-900 rounded-3xl group transition hover:bg-red-950 italic"><span class="font-sync text-[9px] text-white addon-name font-black">${a.name}</span><div class="flex items-center gap-5"><span class="font-sync text-[12px] text-red-500 italic font-black">$${a.p}</span><input type="checkbox" onchange="calculate()" class="addon-check w-7 h-7 accent-red-600" data-price="${a.p}"></div></div>`;
+                });
+                document.getElementById('config-modal').classList.remove('hidden');
+                setTimeout(() => document.getElementById('config-tray').classList.add('tray-show'), 10);
+                document.body.style.overflow = 'hidden';
+                calculate();
+            }, 600);
+        }
+
+        function closeConfig() { document.getElementById('config-tray').classList.remove('tray-show'); setTimeout(() => document.getElementById('config-modal').classList.add('hidden'), 500); document.body.style.overflow = 'auto'; }
+
+        function updateSoil() { const val = document.getElementById('soil-slider').value; document.getElementById('soil-val').innerText = `${val}/10`; document.getElementById('form-soil').value = val; }
+
+        function calculate() {
+            let total = currentBase; if (document.getElementById('pet-hair-toggle').checked) total += 20;
+            const addonNames = []; document.querySelectorAll('.addon-check:checked').forEach(c => { total += parseInt(c.getAttribute('data-price')); addonNames.push(c.closest('div.group').querySelector('.addon-name').innerText); });
+            document.getElementById('total-price').innerText = `$${total}`;
+            document.getElementById('form-total').value = `$${total}`;
+            document.getElementById('form-addons').value = addonNames.join(', ');
+        }
+
+        function openBooking() { document.getElementById('config-modal').classList.add('hidden'); document.getElementById('booking-modal').classList.remove('hidden'); genDates(); }
+
+        function genDates() {
+            const grid = document.getElementById('date-grid'); grid.innerHTML = '';
+            const today = new Date();
+            for(let i=1; i<=14; i++) {
+                const date = new Date(); date.setDate(today.getDate() + i);
+                const day = date.toLocaleString('en-us', {weekday: 'short'});
+                const num = date.getDate(); const full = date.toLocaleDateString();
+                const btn = document.createElement('div');
+                btn.className = "glass p-4 text-center rounded-xl cursor-pointer step-card font-sync text-[10px] font-black";
+                btn.innerHTML = `<div>${day}</div><div>${num}</div>`;
+                btn.onclick = () => {
+                    if (selectedDates.includes(full)) { 
+                        selectedDates = selectedDates.filter(d => d !== full); 
+                        btn.classList.remove('active-date'); 
+                    }
+                    else if (selectedDates.length < 3) { 
+                        selectedDates.push(full); 
+                        btn.classList.add('active-date'); 
+                    }
+                    document.getElementById('form-dates').value = selectedDates.join(', ');
+                    document.getElementById('selected-dates-text').innerText = "SELECTED: " + selectedDates.join(' | ');
+                };
+                grid.appendChild(btn);
+            }
+        }
+
+        function toggleSubmit() {
+            const check = document.getElementById('disclaimer-check').checked;
+            const btn = document.getElementById('submit-btn');
+            if(check) { btn.disabled = false; btn.classList.replace('bg-zinc-800', 'btn-red'); btn.classList.replace('text-zinc-500', 'text-white'); }
+            else { btn.disabled = true; btn.classList.replace('btn-red', 'bg-zinc-800'); btn.classList.replace('text-white', 'text-zinc-500'); }
+        }
+
+        function closeBooking() { document.getElementById('booking-modal').classList.add('hidden'); document.getElementById('config-modal').classList.remove('hidden'); }
+        
+        if (window.innerWidth > 1024) {
+            VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 5, speed: 400, glare: true, "max-glare": 0.2 });
+        }
+    </script>
+</body>
+</html>
