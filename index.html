@@ -4,47 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Blynch Details | Interior Restoration Studio Houston PA</title>
-    <meta name="description" content="Professional interior automotive restoration in Houston, PA. The Blynch Protocol: We Don't Judge, We Detail. High-end interior detailing for Houston and Washington County.">
     
-    <!-- LOCAL SEO SCHEMA -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AutoDetailing",
-      "name": "Blynch Details",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "812 McGovern Road",
-        "addressLocality": "Houston",
-        "addressRegion": "PA",
-        "postalCode": "15342",
-        "addressCountry": "US"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 40.2478,
-        "longitude": -80.2117
-      },
-      "url": "https://blynchdetails.com",
-      "telephone": "+17245998113",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          "opens": "08:00",
-          "closes": "20:00"
-        }
-      ]
-    }
-    </script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     
     <style>
-        :root { --red-deep: #8b0000; --red-sharp: #ff0000; --glass-border: rgba(255, 0, 0, 0.4); }
-        html, body { background-color: #000000 !important; color: #ffffff; scroll-behavior: smooth; margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        :root { 
+            --red-deep: #8b0000; 
+            --red-sharp: #ff0000;
+            --glass-border: rgba(255, 0, 0, 0.4);
+        }
+        
+        html, body { 
+            background-color: #000000 !important; 
+            color: #ffffff; 
+            scroll-behavior: smooth; 
+            margin: 0; 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
         .font-sync { font-family: 'Syncopate', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; }
 
         /* SCROLL REVEAL */
@@ -59,38 +39,42 @@
         .car-body { fill: var(--red-sharp); filter: drop-shadow(0 0 10px var(--red-sharp)); }
 
         /* GLASS BOXES */
-        .glass { background: rgba(10, 10, 10, 0.95); border: 2px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
+        .glass { background: #080808; border: 2px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
         .overlay-page { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); transform: scale(1.05); opacity: 0; pointer-events: none; transition: all 0.4s ease; overflow-y: auto; }
         .overlay-page.open { transform: scale(1); opacity: 1; pointer-events: auto; }
 
         /* BEFORE & AFTER SLIDER */
-        .ba-container { position: relative; width: 100%; height: 400px; border-radius: 30px; overflow: hidden; border: 2px solid var(--red-deep); }
-        .ba-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .ba-after { width: 50%; border-right: 4px solid var(--red-sharp); }
-        .ba-slider { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: col-resize; z-index: 10; }
-        .ba-label { position: absolute; bottom: 20px; padding: 5px 15px; background: rgba(0,0,0,0.8); font-family: 'Syncopate'; font-size: 8px; border: 1px solid var(--red-sharp); }
+        .ba-container { position: relative; width: 100%; height: 450px; border-radius: 30px; overflow: hidden; border: 2px solid var(--red-deep); background: #111; }
+        .ba-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .ba-after-container { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; border-right: 4px solid var(--red-sharp); z-index: 2; }
+        .ba-after-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+        .ba-slider { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: col-resize; z-index: 10; -webkit-appearance: none; }
+        .ba-label { position: absolute; bottom: 20px; padding: 6px 12px; background: rgba(0,0,0,0.85); font-family: 'Syncopate'; font-size: 8px; border: 1px solid var(--red-sharp); z-index: 5; font-weight: bold; }
 
         /* BUTTONS */
         .btn-red { background: linear-gradient(135deg, var(--red-deep) 0%, #4a0000 100%); border: 1px solid var(--red-sharp); transition: all 0.3s ease; }
         .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); background: var(--red-sharp); }
 
-        /* FAQ ACCORDION */
+        /* FAQ */
         .faq-item { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        .faq-trigger { width: 100%; text-align: left; padding: 25px 0; font-family: 'Syncopate'; font-size: 10px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .faq-trigger { width: 100%; text-align: left; padding: 25px 0; font-family: 'Syncopate'; font-size: 10px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; color: #fff; }
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; font-size: 14px; color: #aaa; padding-bottom: 0; }
         .faq-item.active .faq-content { max-height: 200px; padding-bottom: 25px; }
         .faq-item.active .faq-trigger { color: var(--red-sharp); }
 
+        /* DATE PICKER */
+        .active-date { background-color: var(--red-sharp) !important; border-color: #fff !important; color: #fff !important; transform: scale(1.1); box-shadow: 0 0 15px var(--red-sharp); }
+
         @media (max-width: 768px) {
-            .mobile-title { font-size: 1.5rem !important; line-height: 1.2 !important; }
+            .mobile-title { font-size: 1.6rem !important; line-height: 1.2 !important; }
             .nav-link { font-size: 8px !important; }
-            .ba-container { height: 250px; }
+            .ba-container { height: 300px; }
         }
     </style>
 </head>
 <body class="bg-black">
 
-    <!-- THE RACE CAR LAYER -->
+    <!-- LIVE CIRCUIT BACKGROUND -->
     <div class="race-container">
         <svg width="100%" height="100%">
             <rect x="5%" y="5%" width="90%" height="90%" rx="100" class="track-path" />
@@ -106,19 +90,21 @@
     </div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-[100] md:px-8 py-3 md:py-5 flex justify-between items-center glass border-b border-white/10 nav-container">
-        <a href="#"><img src="logo.png" alt="Blynch Details" class="logo-img h-8 md:h-14"></a>
-        <div class="flex gap-2 md:gap-8 items-center font-sync">
+    <nav class="fixed top-0 w-full z-[100] px-3 md:px-8 py-4 flex justify-between items-center glass border-b border-white/10">
+        <a href="#" class="flex items-center">
+            <img src="logo.png" alt="BLYNCH DETAILS" class="h-7 md:h-12" onerror="this.src='https://via.placeholder.com/200x50/000000/ff0000?text=BLYNCH+DETAILS'">
+        </a>
+        <div class="flex gap-3 md:gap-8 items-center font-sync">
             <button onclick="toggleOverlay('why-us-page')" class="nav-link text-[8px] md:text-[11px] hover:text-red-500 transition italic font-bold">Why Us</button>
             <button onclick="toggleOverlay('service-page')" class="nav-link text-[8px] md:text-[11px] hover:text-red-500 transition italic font-bold">Services</button>
             <button onclick="toggleOverlay('contact-page')" class="nav-link text-[8px] md:text-[11px] hover:text-red-500 transition italic font-bold">Contact</button>
-            <a href="#booking-start" class="btn-red text-white px-3 md:px-10 py-2 md:py-3 rounded-full italic font-black text-[8px] md:text-[11px]">BOOK</a>
+            <a href="#booking-start" class="btn-red text-white px-4 md:px-10 py-2 md:py-3 rounded-full italic font-black text-[8px] md:text-[11px]">BOOK</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 italic reveal">
-        <img src="logo.png" alt="BLYNCH DETAILS" class="h-40 sm:h-64 md:h-80 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(255,0,0,0.3)]">
+    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 italic reveal">
+        <img src="logo.png" alt="BLYNCH DETAILS" class="h-40 sm:h-64 md:h-80 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(255,0,0,0.3)]" onerror="this.style.display='none'">
         <h1 class="font-sync text-2xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-4 mobile-title italic">
             PERFECTION LIVES IN<br><span class="text-red-600">THE SMALL DETAILS.</span>
         </h1>
@@ -131,44 +117,51 @@
         </div>
     </section>
 
-    <!-- THE TRANSFORMATION LAB (BEFORE/AFTER) -->
+    <!-- THE TRANSFORMATION LAB (SLIDER UPDATED FOR YOUR FILENAMES) -->
     <section class="py-20 px-6 relative z-10 italic">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="font-sync text-[12px] text-red-600 font-bold mb-12 italic tracking-widest reveal">The Transformation Lab</h2>
+            
             <div class="ba-container reveal shadow-2xl">
-                <img src="before.jpg" class="ba-img" alt="Before Blynch Detail">
-                <div class="ba-img ba-after" id="after-img" style="background-image: url('after.jpg'); background-size: cover; background-position: center;"></div>
-                <input type="range" min="0" max="100" value="50" class="ba-slider" id="ba-range" oninput="moveBA(this.value)">
-                <div class="ba-label left-4 text-white" style="left: 20px;">BEFORE</div>
-                <div class="ba-label right-4 text-red-600" style="right: 20px;">AFTER BLYNCH</div>
+                <!-- LOOKS FOR before.png.jpeg -->
+                <img src="before.png.jpeg" class="ba-img" alt="Before Protocol" onerror="this.src='before.jpg'">
+                
+                <!-- LOOKS FOR after.png.jpeg -->
+                <div class="ba-after-container" id="ba-after-box">
+                    <img src="after.png.jpeg" class="ba-after-img" alt="After Reset" id="after-img-element" onerror="this.src='after.jpg'">
+                </div>
+                
+                <input type="range" min="0" max="100" value="50" class="ba-slider" oninput="handleSlider(this.value)">
+                
+                <div class="ba-label" style="left: 20px;">BEFORE</div>
+                <div class="ba-label" style="right: 20px; color: #ff0000;">AFTER RESET</div>
             </div>
-            <p class="mt-8 text-xs silver-text font-bold italic">Swipe to compare the Blynch Protocol results.</p>
+            
+            <p class="mt-8 text-xs text-gray-400 font-bold italic uppercase tracking-widest">Slide to verify the Blynch results.</p>
         </div>
     </section>
 
-    <!-- WHY US OVERLAY (UPDATED WITH INNER CIRCLE) -->
+    <!-- WHY US OVERLAY -->
     <div id="why-us-page" class="overlay-page italic">
         <div class="max-w-4xl mx-auto px-6 py-20">
             <button onclick="toggleOverlay('why-us-page')" class="fixed top-6 right-6 font-sync text-red-600 font-black text-[10px] bg-white text-black px-5 py-3 rounded-full z-[600]">CLOSE [X]</button>
-            <h2 class="font-sync text-3xl md:text-6xl text-white mb-10">The Blynch<br><span class="text-red-600">Advantage.</span></h2>
+            <h2 class="font-sync text-3xl md:text-6xl text-white mb-10 italic">The Blynch<br><span class="text-red-600">Advantage.</span></h2>
             
             <div class="space-y-8">
                 <div class="glass p-8 rounded-[40px] border-red-600">
-                    <h3 class="font-sync text-lg text-red-500 mb-4 italic">Elite Quality. Home-Based Pricing.</h3>
+                    <h3 class="font-sync text-lg text-red-500 mb-4 italic italic">Studio Quality. Smarter Pricing.</h3>
                     <p class="text-white text-sm md:text-base leading-relaxed font-bold italic">
-                        Because we operate as a private studio, we avoid the $5,000+ monthly overhead of commercial shops. We pass those savings to you—allowing for a clinical detail at half the retail cost.
+                        Blynch Details is a private interior restoration studio. By operating from a high-end garage setup in Houston, we eliminate the massive overhead of commercial retail space. 
+                        <br><br>
+                        <span class="text-red-500 underline underline-offset-4">We view detailing as a long-term investment.</span> Proper interior maintenance prevents leather cracking, fabric staining, and permanent odors.
                     </p>
                 </div>
 
-                <div class="glass p-8 rounded-[40px] border-red-600 bg-gradient-to-r from-red-950/20 to-transparent">
-                    <h3 class="font-sync text-lg text-white mb-4 italic">Blynch Inner Circle</h3>
+                <div class="glass p-8 rounded-[40px] border-red-600 bg-gradient-to-r from-red-950/20 to-transparent italic">
+                    <h3 class="font-sync text-lg text-white mb-4 italic">The Inner Circle</h3>
                     <p class="text-white text-sm font-bold italic mb-6">Exclusive Monthly Maintenance for past Reset clients.</p>
-                    <div class="text-xs text-gray-300 font-bold space-y-2 mb-8">
-                        <p>• Lock in your factory finish forever.</p>
-                        <p>• Fixed monthly rates starting at $75.</p>
-                        <p>• Priority scheduling and door-to-door concierge.</p>
-                    </div>
-                    <button onclick="toggleOverlay('why-us-page'); document.getElementById('booking-start').scrollIntoView()" class="btn-red text-white px-8 py-3 rounded-full text-[10px] font-black">Inquire at Booking</button>
+                    <p class="text-xs text-gray-400 font-bold mb-8">• Lock in your factory finish forever. Fixed monthly rates starting at $75.</p>
+                    <button onclick="toggleOverlay('why-us-page'); document.getElementById('booking-start').scrollIntoView()" class="btn-red text-white px-8 py-3 rounded-full text-[10px] font-black italic">INQUIRE AT BOOKING</button>
                 </div>
             </div>
         </div>
@@ -204,8 +197,8 @@
             <h2 class="font-sync text-3xl md:text-6xl text-white mb-16 italic">Connect<br><span class="text-red-700">Studio.</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
                 <div class="space-y-8">
-                    <div class="glass p-8 rounded-3xl border-red-600"><h3 class="text-red-600 font-sync text-[10px] mb-4">Direct Line</h3><a href="tel:7245998113" class="text-2xl font-black text-white italic">724-599-8113</a></div>
-                    <div class="glass p-8 rounded-3xl border-red-600"><h3 class="text-red-600 font-sync text-[10px] mb-4">Location</h3><p class="text-lg text-white font-bold italic">812 McGovern Road, Houston, PA 15342</p></div>
+                    <div class="glass p-8 rounded-3xl border-red-600"><h3 class="text-red-600 font-sync text-[10px] mb-4 italic">Direct Line</h3><a href="tel:7245998113" class="text-2xl font-black text-white italic">724-599-8113</a></div>
+                    <div class="glass p-8 rounded-3xl border-red-600"><h3 class="text-red-600 font-sync text-[10px] mb-4 italic">Location</h3><p class="text-lg text-white font-bold italic">812 McGovern Road, Houston, PA 15342</p></div>
                 </div>
                 <div class="glass p-8 rounded-3xl border-red-600 flex flex-col justify-center gap-6 italic font-bold text-white">
                     <a href="https://www.instagram.com/blynchdetails" target="_blank" class="hover:text-red-500 transition">Instagram: @blynchdetails</a>
@@ -219,7 +212,7 @@
     <!-- BOOKING ENGINE -->
     <section id="booking-start" class="py-20 md:py-24 px-6 relative z-10 italic reveal">
         <div class="max-w-5xl mx-auto text-center">
-            <h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest italic">Step I. Identification</h2>
+            <h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest italic italic">Step I. Identification</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 md:mb-24 italic">
                 <div onclick="setSize('Sedan', 0)" id="size-0" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">Sedan / Coupe</div>
                 <div onclick="setSize('2Row', 1)" id="size-1" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">2 Row SUV</div>
@@ -230,12 +223,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                     <div onclick="openConfig('basic')" class="glass p-10 md:p-12 rounded-[40px] group border-white/20 hover:border-red-600 transition cursor-pointer">
                         <h3 class="font-sync text-2xl text-white mb-2 italic">The Basic Detail</h3>
-                        <div id="price-basic" class="font-sync text-4xl text-red-600 font-black mt-4">$120</div>
+                        <div id="price-basic" class="font-sync text-4xl text-red-600 font-black mt-4 italic">$120</div>
                         <button class="mt-10 md:mt-12 w-full bg-white text-black font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Configure</button>
                     </div>
                     <div onclick="openConfig('benchmark')" class="glass p-10 md:p-12 rounded-[40px] group border-red-700 shadow-2xl transition cursor-pointer">
                         <h3 class="font-sync text-2xl text-white mb-2 italic">Blynch Benchmark</h3>
-                        <div id="price-benchmark" class="font-sync text-4xl text-red-600 font-black mt-4">$150</div>
+                        <div id="price-benchmark" class="font-sync text-4xl text-red-600 font-black mt-4 italic">$150</div>
                         <button class="mt-10 md:mt-12 w-full btn-red text-white font-sync py-4 md:py-5 rounded-full text-[10px] font-black italic">Configure</button>
                     </div>
                 </div>
@@ -243,27 +236,26 @@
         </div>
     </section>
 
-    <!-- ELITE FAQ SECTION -->
-    <section class="py-24 px-6 relative z-10 italic">
+    <!-- ABOUT US -->
+    <section id="about" class="py-24 md:py-48 px-6 glass rounded-t-[60px] md:rounded-t-[120px] relative z-10 italic reveal">
+        <div class="max-w-4xl mx-auto italic text-center">
+            <h2 class="font-sync text-[14px] text-red-500 font-black mb-6 tracking-widest italic">The Studio & Founder</h2>
+            <h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-12 md:mb-16 leading-tight italic">Built On <span class="text-red-700">Discipline.</span></h3>
+            <div class="space-y-12 text-white text-lg md:text-xl font-bold leading-relaxed text-left md:text-center italic">
+                <p>Blynch Details was founded nearly two years ago on a drive for entrepreneurial mastery. Founded by a <span class="text-red-500">16-year-old entrepreneur</span>, we approach every restoration with business discipline and uncompromising attention to detail.</p>
+                <p>Every vehicle that enters our studio is treated with the same precision I would expect for my own vehicle. Dealing directly with the owner ensures a level of consistency that commercial car washes cannot match.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ELITE FAQ -->
+    <section class="py-24 px-6 relative z-10 italic reveal">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-sync text-[12px] text-red-600 font-bold mb-12 italic tracking-widest reveal text-center">Elite F.A.Q.</h2>
-            <div class="space-y-4 reveal italic font-bold">
-                <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">HOW LONG DOES A RESET TAKE? <span>+</span></button>
-                    <div class="faq-content">The Basic Detail typically takes 2-3 hours. The Blynch Benchmark restoration takes 4-6 hours depending on soil levels.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">DO YOU NEED MY WATER OR POWER? <span>+</span></button>
-                    <div class="faq-content">No. All Resets are performed in our professional garage studio on McGovern Road, which is fully equipped with industrial power and filtered water.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">IS MY VEHICLE SECURE? <span>+</span></button>
-                    <div class="faq-content">Absolutely. Your vehicle is the only one in the studio during the protocol. Our facility is climate-controlled and monitored 24/7.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">WHAT CHEMICALS DO YOU USE? <span>+</span></button>
-                    <div class="faq-content">We use exclusively pH-neutral, clinical-grade restorers that are safe for high-end leather, Alcantara, and sensitive electronics. No greasy residues.</div>
-                </div>
+            <h2 class="font-sync text-[14px] text-red-600 font-black mb-12 tracking-widest text-center">Elite F.A.Q.</h2>
+            <div class="space-y-2 italic font-bold">
+                <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">HOW LONG DOES A RESET TAKE? <span>+</span></button><div class="faq-content">Basic Detail: 2-3 hours. Benchmark: 4-6 hours depending on condition.</div></div>
+                <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">DO YOU NEED MY WATER OR POWER? <span>+</span></button><div class="faq-content">No. Resets are performed in our professional garage studio, fully equipped with industrial power and filtered water.</div></div>
+                <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">WHAT CHEMICALS DO YOU USE? <span>+</span></button><div class="faq-content">Clinical-grade, pH-neutral restorers safe for leather, Alcantara, and sensitive electronics.</div></div>
             </div>
         </div>
     </section>
@@ -282,7 +274,7 @@
                         <input type="checkbox" id="pet-hair-toggle" class="w-16 h-8 accent-red-600" onchange="calculate()">
                     </div>
                     <div class="p-8 rounded-3xl border-2 border-white/20 bg-black">
-                        <div class="flex justify-between items-center mb-6">
+                        <div class="flex justify-between items-center mb-6 italic">
                             <h4 class="font-sync text-[11px] text-red-500 font-black">Soil Gauge</h4>
                             <span id="soil-val" class="font-sync text-xl text-white font-black italic">5/10</span>
                         </div>
@@ -292,8 +284,8 @@
                 <div id="addon-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold italic text-white"></div>
             </div>
             <div class="p-8 bg-black border-t-2 border-red-600 flex justify-between items-center italic">
-                <div><p class="font-sync text-[10px] text-red-600 font-black italic">TOTAL INVESTMENT</p><h3 id="total-price" class="font-sync text-2xl md:text-5xl text-white font-black">$0</h3></div>
-                <button onclick="openBooking()" class="btn-red text-white px-8 md:px-14 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black italic">CONTINUE</button>
+                <div><p class="font-sync text-[10px] text-red-600 font-black italic">EST. TOTAL</p><h3 id="total-price" class="font-sync text-2xl md:text-5xl text-white font-black">$0</h3></div>
+                <button onclick="openBooking()" class="btn-red text-white px-10 md:px-14 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black italic">CONTINUE</button>
             </div>
         </div>
     </div>
@@ -301,23 +293,26 @@
     <!-- BOOKING MODAL -->
     <div id="booking-modal" class="fixed inset-0 modal-overlay z-[700] hidden flex items-center justify-center p-3 italic">
         <div class="glass w-full max-w-xl p-6 md:p-12 rounded-[40px] md:rounded-[60px] border-red-600 bg-black overflow-y-auto max-h-[90vh]">
-            <h2 class="font-sync text-xl text-white mb-8 text-center font-black italic">Finalize Request</h2>
+            <h2 class="font-sync text-xl text-white mb-8 text-center font-black italic">Request Slot</h2>
             <form action="https://formspree.io/f/xvzvwvzl" method="POST" class="space-y-5">
-                <input type="hidden" name="Investment" id="form-total"><input type="hidden" name="Size" id="form-size">
+                <input type="hidden" name="Price" id="form-total"><input type="hidden" name="Size" id="form-size">
                 <input type="hidden" name="Tier" id="form-tier"><input type="hidden" name="Soil" id="form-soil">
                 <input type="hidden" name="Dates" id="form-dates"><input type="hidden" name="Addons" id="form-addons">
+                
                 <div>
                     <h4 class="text-[10px] font-sync text-red-600 mb-4 text-center italic">Select Target Dates</h4>
                     <div id="date-grid" class="grid grid-cols-4 md:grid-cols-7 gap-2 mb-2 font-bold italic text-white"></div>
-                    <p id="selected-dates-text" class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest font-black italic">No dates selected</p>
+                    <p id="selected-dates-text" class="text-[10px] text-red-500 mt-4 text-center uppercase tracking-widest font-black italic">No dates selected</p>
                 </div>
-                <div class="space-y-4 italic">
+
+                <div class="space-y-4">
                     <input type="text" name="Client" placeholder="Your Name" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic">
                     <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic">
                     <textarea name="Vehicle" placeholder="Year, Make, Model" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white h-20 font-bold italic"></textarea>
                 </div>
-                <div class="bg-red-950/20 p-6 rounded-3xl border-2 border-red-600 italic">
-                    <label class="flex gap-4 cursor-pointer items-start italic"><input type="checkbox" id="disclaimer-check" required class="w-8 h-8 accent-red-600 mt-1" onchange="toggleSubmit()"><span class="text-[11px] font-black text-white leading-relaxed italic uppercase tracking-tighter italic">Final pricing verified upon inspection. Adjustments for soil agreed before start.</span></label>
+                
+                <div class="bg-red-950/20 p-6 rounded-3xl border-2 border-red-600">
+                    <label class="flex gap-4 cursor-pointer items-start"><input type="checkbox" id="disclaimer-check" required class="w-8 h-8 accent-red-600 mt-1" onchange="toggleSubmit()"><span class="text-[11px] font-black text-white leading-relaxed italic uppercase tracking-tighter italic">Final pricing verified upon inspection. Excessive soil adjustments agreed before start.</span></label>
                 </div>
                 <button type="submit" id="submit-btn" disabled class="font-sync w-full bg-zinc-800 text-zinc-500 py-6 rounded-full text-[11px] font-black italic">SUBMIT PROTOCOL</button>
             </form>
@@ -325,26 +320,33 @@
         </div>
     </div>
 
-    <!-- GOOGLE REVIEW -->
+    <!-- REVIEWS -->
     <section class="py-24 px-6 relative z-10 italic">
-        <div class="max-w-3xl mx-auto glass p-8 md:p-20 rounded-[50px] md:rounded-[80px] text-center border-red-600 shadow-3xl reveal flex flex-col items-center">
+        <h2 class="font-sync text-[12px] md:text-[14px] text-red-600 font-black text-center mb-24 tracking-[0.4em] reveal">Success Stories</h2>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 italic mb-32">
+            <div class="glass p-12 rounded-[50px] border-red-900 reveal" data-tilt><p class="text-white text-lg italic mb-10 font-black italic">"Benchmark reset made my SUV look showroom floor new."</p><div class="font-sync text-[10px] text-red-600 italic">— Sarah M.</div></div>
+            <div class="glass p-12 rounded-[50px] border-red-900 reveal" data-tilt><p class="text-white text-lg italic mb-10 font-black italic">"Clinical attention to detail. Every vent was perfect."</p><div class="font-sync text-[10px] text-red-600 italic">— Mike R.</div></div>
+            <div class="glass p-12 rounded-[50px] border-red-900 reveal" data-tilt><p class="text-white text-lg italic mb-10 font-black italic">"No surprises on price. Professional Houston studio."</p><div class="font-sync text-[10px] text-red-600 italic">— Jason D.</div></div>
+        </div>
+
+        <div class="max-w-3xl mx-auto glass p-8 md:p-20 rounded-[50px] md:rounded-[80px] text-center border-red-600 shadow-3xl reveal flex flex-col items-center italic">
             <div class="flex justify-center gap-1 mb-8"><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span></div>
-            <h2 class="font-sync text-xl md:text-4xl text-white mb-6 italic font-black">Rate The Protocol.</h2>
-            <p class="text-gray-300 font-bold uppercase tracking-widest text-[10px] md:text-xs mb-10 italic max-w-sm">Protect your investment with local feedback.</p>
-            <a href="https://g.page/r/CXpGlc5ck74CEBM/review" target="_blank" class="btn-red text-white px-10 md:px-20 py-5 rounded-full font-sync text-[10px] md:text-[12px] font-black italic w-full sm:w-auto">Leave Review</a>
+            <h2 class="font-sync text-2xl md:text-4xl text-white mb-6 italic font-black">Rate The Protocol.</h2>
+            <p class="text-gray-300 font-bold uppercase tracking-widest text-[10px] mb-12 italic">Protect your investment with local feedback.</p>
+            <a href="https://g.page/r/CXpGlc5ck74CEBM/review" target="_blank" class="btn-red text-white px-10 md:px-20 py-5 rounded-full font-sync text-[11px] font-black italic w-full sm:w-auto">Leave Review</a>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="py-24 px-10 border-t border-red-950 relative z-10 text-center bg-black italic">
         <div class="mb-14 flex justify-center"><img src="logo.png" alt="BLYNCH DETAILS" class="h-10 md:h-14 opacity-80"></div>
-        <a href="tel:7245998113" class="font-sync text-2xl md:text-5xl text-white block mb-10 hover:text-red-500 italic font-black tracking-tighter italic">724-599-8113</a>
-        <div class="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 font-sync text-[12px] text-red-600 font-bold mb-16">
+        <a href="tel:7245998113" class="font-sync text-2xl md:text-5xl text-white block mb-10 hover:text-red-500 italic font-black italic">724-599-8113</a>
+        <div class="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 font-sync text-[12px] text-red-600 font-bold mb-16 italic font-bold">
             <a href="https://www.instagram.com/blynchdetails" target="_blank">Instagram</a>
             <a href="https://www.tiktok.com/@blynchdetails" target="_blank">TikTok</a>
             <a href="https://www.facebook.com/people/Blynch-Details/100085440788775/" target="_blank">Facebook</a>
         </div>
-        <p class="font-sync text-[10px] text-gray-600 opacity-60 italic">© 2024 Blynch Details • Interior Restoration Protocol • Houston, PA</p>
+        <p class="font-sync text-[10px] text-gray-600 opacity-60 italic italic">© 2024 Blynch Details • Interior Restoration Protocol • Houston, PA</p>
     </footer>
 
     <script>
@@ -355,9 +357,9 @@
             benchmark: [{ name: 'Leather Conditioner', p: 25 }, { name: 'Leather Ceramic Coating', p: 60 }]
         };
 
-        function moveBA(val) { document.getElementById('after-img').style.width = val + '%'; }
-        function toggleFaq(btn) { btn.parentElement.classList.toggle('active'); }
+        function handleSlider(val) { document.getElementById('ba-after-box').style.width = val + '%'; }
         function toggleOverlay(id) { const el = document.getElementById(id); el.classList.toggle('open'); document.body.style.overflow = el.classList.contains('open') ? 'hidden' : 'auto'; }
+        function toggleFaq(btn) { btn.parentElement.classList.toggle('active'); }
 
         const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
@@ -383,7 +385,7 @@
                 const list = document.getElementById('addon-list');
                 list.innerHTML = '';
                 addonsData[tier].forEach(a => {
-                    list.innerHTML += `<div class="flex items-center justify-between p-8 glass border-red-600 rounded-3xl group transition hover:bg-red-950 italic"><span class="font-sync text-[9px] text-white addon-name font-black italic">${a.name}</span><div class="flex items-center gap-6"><span class="font-sync text-[12px] text-red-500 italic font-black">$${a.p}</span><input type="checkbox" onchange="calculate()" class="addon-check w-8 h-8 accent-red-600" data-price="${a.p}"></div></div>`;
+                    list.innerHTML += `<div class="flex items-center justify-between p-8 glass border-red-600 rounded-3xl group transition hover:bg-red-950 italic"><span class="font-sync text-[9px] text-white addon-name font-black italic italic italic">${a.name}</span><div class="flex items-center gap-6"><span class="font-sync text-[13px] text-red-500 font-black italic italic italic">$${a.p}</span><input type="checkbox" onchange="calculate()" class="addon-check w-8 h-8 accent-red-600" data-price="${a.p}"></div></div>`;
                 });
                 document.getElementById('config-modal').classList.remove('hidden');
                 setTimeout(() => document.getElementById('config-tray').classList.add('tray-show'), 10);
@@ -432,9 +434,8 @@
             if(check) { btn.disabled = false; btn.classList.replace('bg-zinc-800', 'btn-red'); btn.classList.replace('text-zinc-500', 'text-white'); }
             else { btn.disabled = true; btn.classList.replace('btn-red', 'bg-zinc-800'); btn.classList.replace('text-white', 'text-zinc-500'); }
         }
-
+        
         if (window.innerWidth > 1024) VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 5, speed: 400, glare: true, "max-glare": 0.2 });
     </script>
 </body>
 </html>
-
