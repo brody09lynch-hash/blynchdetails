@@ -11,233 +11,110 @@
         :root { --red-deep: #8b0000; --red-sharp: #ff0000; --gold: #d4af37; --glass-border: rgba(255, 0, 0, 0.4); }
         html, body { background-color: #000000 !important; color: #ffffff; scroll-behavior: smooth; margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         .font-sync { font-family: 'Syncopate', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; }
-
-        /* ANIMATIONS */
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* RACE TRACK */
         .race-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
         .track-path { fill: none; stroke: rgba(255, 0, 0, 0.08); stroke-width: 2; }
         .car-group { offset-path: rect(5% 5% 95% 95% round 100px); animation: race-loop 12s linear infinite; }
         @keyframes race-loop { 0% { offset-distance: 0%; } 100% { offset-distance: 100%; } }
         .car-body { fill: var(--red-sharp); filter: drop-shadow(0 0 10px var(--red-sharp)); }
-
-        /* UI ELEMENTS */
-        .glass { background: rgba(15, 15, 15, 0.95); border: 2px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
-        .active-selection { border: 3px solid var(--red-sharp) !important; background: rgba(225, 29, 72, 0.15) !important; box-shadow: 0 0 35px rgba(255, 0, 0, 0.4) !important; transform: scale(1.02); }
-
+        .glass { background: rgba(15, 15, 15, 0.95); border: 2px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); transition: all 0.3s ease; }
+        .active-selection { border: 3px solid var(--red-sharp) !important; background: rgba(225, 29, 72, 0.15) !important; transform: scale(1.02); }
         .overlay-page { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.98); backdrop-filter: blur(25px); transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
         .overlay-page.open { transform: translateX(0); }
-
-        /* MEMBERSHIP */
-        .card-black { border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
-        .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #996515 100%); border: 1px solid #fff; color: black !important; font-weight: 900; }
-
-        /* RESULTS */
+        .member-unlocked .glass { border-color: var(--gold); }
+        .member-unlocked .btn-red { background: linear-gradient(135deg, var(--gold) 0%, #996515 100%); color: #000; font-weight: 900; }
         .result-img-container { position: relative; border-radius: 24px; overflow: hidden; border: 2px solid var(--red-deep); aspect-ratio: 16/9; background: #0a0a0a; min-height: 200px; }
         .result-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .result-label { position: absolute; bottom: 15px; left: 15px; background: rgba(0,0,0,0.85); padding: 5px 12px; font-family: 'Syncopate'; font-size: 8px; border: 1px solid var(--red-sharp); color: #fff; z-index: 2; }
-
         .btn-red { background: linear-gradient(135deg, var(--red-deep) 0%, #4a0000 100%); border: 1px solid var(--red-sharp); transition: all 0.3s ease; }
         .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 0, 0, 0.5); background: var(--red-sharp); }
-
-        input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; height: 40px; width: 100%; }
+        input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; height: 40px; }
         input[type=range]::-webkit-slider-runnable-track { height: 8px; background: #1a1a1a; border-radius: 10px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 30px; width: 30px; border-radius: 50%; background: #fff; margin-top: -11px; border: 3px solid var(--red-sharp); box-shadow: 0 0 20px var(--red-sharp); }
-
-        @media (max-width: 768px) {
-            .mobile-title { font-size: 1.6rem !important; line-height: 1.2 !important; }
-            .nav-container { padding-left: 0.5rem; padding-right: 0.5rem; gap: 0.2rem; }
-            .nav-link { font-size: 7px !important; letter-spacing: 0.05em !important; }
-            .logo-img { height: 28px !important; }
-        }
+        @media (max-width: 768px) { .mobile-title { font-size: 1.6rem !important; } .nav-container { padding-left: 0.5rem; padding-right: 0.5rem; gap: 0.2rem; } .nav-link { font-size: 7px !important; } .logo-img { height: 26px !important; } }
     </style>
 </head>
-<body class="bg-black">
+<body class="bg-black" id="main-body">
 
-    <!-- LIVE CIRCUIT -->
-    <div class="race-container">
-        <svg width="100%" height="100%">
-            <rect x="5%" y="5%" width="90%" height="90%" rx="100" class="track-path" />
-            <g class="car-group" id="main-car">
-                <path d="M -60 0 L 0 0" stroke="url(#carTail)" stroke-width="12" stroke-linecap="round" opacity="0.8" />
-                <path class="car-body" d="M15,2 L35,2 L45,8 L45,15 L5,15 L5,8 L15,2 Z" transform="translate(-25, -8)" />
-                <circle r="6" fill="#fff" filter="blur(2px)" />
-            </g>
-            <defs><linearGradient id="carTail" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff0000" stop-opacity="0" /><stop offset="100%" stop-color="#ff0000" stop-opacity="1" /></linearGradient></defs>
-        </svg>
-    </div>
+    <div class="race-container"><svg width="100%" height="100%"><rect x="5%" y="5%" width="90%" height="90%" rx="100" class="track-path"/><g class="car-group" id="main-car"><path d="M -60 0 L 0 0" stroke="url(#carTail)" stroke-width="12" stroke-linecap="round" opacity="0.8"/><path class="car-body" d="M15,2 L35,2 L45,8 L45,15 L5,15 L5,8 L15,2 Z" transform="translate(-25, -8)"/><circle r="6" fill="#fff" filter="blur(2px)"/></g><defs><linearGradient id="carTail" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff0000" stop-opacity="0"/><stop offset="100%" stop-color="#ff0000" stop-opacity="1"/></linearGradient></defs></svg></div>
 
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-[100] md:px-8 py-4 flex justify-between items-center glass border-b border-white/10 nav-container italic">
-        <a href="#" onclick="haptic()"><img src="logo.png" id="nav-logo" alt="BLYNCH" class="logo-img h-8 md:h-14" onerror="handleImgErr(this, 'logo')"></a>
+        <div class="flex items-center gap-4"><a href="#" onclick="haptic()"><img src="logo.png" id="nav-logo" alt="BLYNCH" class="logo-img h-8 md:h-12" onerror="handleImgErr(this, 'logo')"></a></div>
         <div class="flex gap-2 md:gap-8 items-center font-sync">
-            <button onclick="toggleOverlay('inner-circle-page'); haptic()" class="nav-link text-[7px] md:text-[11px] text-red-500 font-black underline decoration-red-900 underline-offset-4 uppercase">Inner Circle</button>
+            <button onclick="toggleOverlay('inner-circle-page'); haptic()" class="nav-link text-[7px] md:text-[11px] text-red-500 font-black underline decoration-red-900 underline-offset-4">Inner Circle</button>
             <button onclick="toggleOverlay('why-us-page'); haptic()" class="nav-link text-[7px] md:text-[11px] hover:text-red-500 transition font-bold uppercase">Why Us</button>
-            <button onclick="toggleOverlay('service-page'); haptic()" class="nav-link text-[7px] md:text-[11px] hover:text-red-500 transition font-bold uppercase">Services</button>
-            <button onclick="toggleOverlay('contact-page'); haptic()" class="nav-link text-[7px] md:text-[11px] hover:text-red-500 transition font-bold uppercase">Contact</button>
+            <button onclick="checkMemberKey(); haptic()" class="nav-link text-[7px] md:text-[11px] text-gray-500 hover:text-white transition font-bold uppercase">Unlock VIP</button>
             <a href="#booking-start" onclick="haptic()" class="btn-red text-white px-3 md:px-10 py-2 md:py-3 rounded-full font-black text-[7px] md:text-[11px]">BOOK</a>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 italic">
-        <img src="logo.png" id="hero-logo" alt="BLYNCH DETAILS" class="h-40 sm:h-56 md:h-80 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(255,0,0,0.3)]" onerror="handleImgErr(this, 'logo')">
-        <h1 class="font-sync text-2xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-4 mobile-title italic">
-            PERFECTION LIVES IN<br><span class="text-red-600">THE SMALL DETAILS.</span>
-        </h1>
-        <p class="text-[11px] md:text-sm text-gray-300 max-w-xl mx-auto italic font-bold tracking-[0.3em] mb-12 uppercase">
-            Your vehicle is an asset. Invest in its preservation.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#booking-start" onclick="haptic()" class="font-sync bg-white text-black px-12 md:px-20 py-5 rounded-full text-[10px] font-black hover:bg-red-600 hover:text-white transition-all scale-105">Invest In A Reset</a>
-            <button onclick="toggleOverlay('inner-circle-page'); haptic()" class="font-sync glass text-red-600 px-12 py-5 rounded-full text-[10px] font-black">Inner Circle</button>
-        </div>
+    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 italic reveal">
+        <img src="logo.png" id="hero-logo" alt="BLYNCH" class="h-40 sm:h-56 md:h-80 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(255,0,0,0.3)]" onerror="handleImgErr(this, 'logo')">
+        <h1 class="font-sync text-2xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-4 mobile-title">PERFECTION LIVES IN<br><span class="text-red-600">THE SMALL DETAILS.</span></h1>
+        <p class="text-[11px] md:text-sm text-gray-300 max-w-xl mx-auto italic font-bold tracking-[0.3em] mb-12 uppercase">Your vehicle is an asset. Invest in its preservation.</p>
+        <div class="flex flex-col sm:flex-row gap-4"><a href="#booking-start" onclick="haptic()" class="font-sync bg-white text-black px-12 md:px-20 py-5 rounded-full text-[10px] font-black hover:bg-red-600 hover:text-white transition-all scale-105">Invest In A Reset</a><button onclick="toggleOverlay('why-us-page'); haptic()" class="font-sync glass text-white px-12 py-5 rounded-full text-[10px] font-black">The Advantage</button></div>
     </section>
 
-    <!-- TRANSFORMATION LAB -->
     <section class="py-20 px-6 relative z-10 italic">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="font-sync text-[12px] text-red-600 font-bold mb-12 tracking-widest reveal">The Transformation Lab</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
-                <div class="result-img-container shadow-2xl"><img src="after.png" onerror="handleImgErr(this, 'after')"><div class="result-label">PROTOCOL COMPLETE</div></div>
-                <div class="result-img-container shadow-2xl"><img src="after2.png" onerror="handleImgErr(this, 'after2')"><div class="result-label">BENCHMARK RESTORED</div></div>
-            </div>
-        </div>
+        <div class="max-w-5xl mx-auto text-center"><h2 class="font-sync text-[12px] text-red-600 font-bold mb-12 tracking-widest reveal">The Transformation Lab</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal"><div class="result-img-container shadow-2xl"><img src="after.png" onerror="handleImgErr(this, 'after')"><div class="result-label">PROTOCOL COMPLETE</div></div><div class="result-img-container shadow-2xl"><img src="after2.png" onerror="handleImgErr(this, 'after2')"><div class="result-label">BENCHMARK RESTORED</div></div></div></div>
     </section>
 
-    <!-- BLYNCH PROTOCOL -->
-    <section class="py-24 md:py-40 px-6 relative z-10 perspective-view italic">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="font-sync text-[14px] text-red-600 font-black mb-4 tracking-widest reveal">The Blynch Protocol</h2>
-            <h3 class="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-20 reveal">Surgical Standards.</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-sm text-red-500 font-black mb-6">01. Zero Judgment</h4>
-                    <p class="text-white text-base font-bold italic">Whether it's family chaos or a work-truck disaster, our studio is a focused "Reset" zone.</p>
-                </div>
-                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-sm text-red-500 font-black mb-6">02. Surgical Depth</h4>
-                    <p class="text-white text-base font-bold italic">We target tracks, vents, and internal crevices. We detail what others ignore.</p>
-                </div>
-                <div class="glass p-12 rounded-[40px] border-l-8 border-red-700 reveal" data-tilt>
-                    <h4 class="font-sync text-sm text-red-500 font-black mb-6">03. Clinical Gear</h4>
-                    <p class="text-white text-base font-bold italic">Medical-grade steam and high-heat extraction to vaporize odors at the molecular level.</p>
-                </div>
-            </div>
-        </div>
+    <section id="protocol" class="py-24 md:py-40 px-6 relative z-10 italic reveal">
+        <div class="max-w-7xl mx-auto text-center"><h2 class="font-sync text-[14px] text-red-600 font-black mb-4 tracking-widest">The Blynch Protocol</h2><h3 class="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-20">Surgical Standards.</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10"><div class="glass p-12 rounded-[40px] border-l-8 border-red-700" data-tilt><h4 class="font-sync text-sm text-red-500 font-black mb-6">01. Zero Judgment</h4><p class="text-white text-base font-bold italic">No matter the condition, we focus solely on the "Reset."</p></div><div class="glass p-12 rounded-[40px] border-l-8 border-red-700" data-tilt><h4 class="font-sync text-sm text-red-500 font-black mb-6">02. Surgical Depth</h4><p class="text-white text-base font-bold italic">We target tracks, vents, and crevices others ignore.</p></div><div class="glass p-12 rounded-[40px] border-l-8 border-red-700" data-tilt><h4 class="font-sync text-sm text-red-500 font-black mb-6">03. Clinical Gear</h4><p class="text-white text-base font-bold italic">Medical-grade steam and high-heat molecular extraction.</p></div></div></div>
     </section>
 
-    <!-- BOOKING ENGINE -->
     <section id="booking-start" class="py-24 px-6 relative z-10 italic reveal">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest italic">Step I. Identification</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
-                <div onclick="setSize('Sedan', 0); haptic()" id="size-0" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">Sedan / Coupe</div>
-                <div onclick="setSize('2Row', 1); haptic()" id="size-1" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">2 Row SUV</div>
-                <div onclick="setSize('3Row', 2); haptic()" id="size-2" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">3 Row / Truck</div>
-            </div>
-            <div id="package-section" class="hidden opacity-0 transition-all duration-1000">
-                <h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest">Step II. Mission Tier</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 italic font-bold">
-                    <div onclick="setTier('basic'); haptic()" id="tier-basic" class="glass p-8 rounded-[40px] group border-white/20 hover:border-red-600 transition cursor-pointer">
-                        <h3 class="font-sync text-[10px] text-white mb-2 italic">The Basic Detail</h3>
-                        <div id="price-card-basic" class="font-sync text-2xl text-red-600 font-black mt-4">$120</div>
-                        <button class="mt-8 w-full bg-white text-black font-sync py-3 rounded-full text-[8px] font-black">Select</button>
-                    </div>
-                    <div onclick="setTier('benchmark'); haptic()" id="tier-benchmark" class="glass p-8 rounded-[40px] group border-red-700 transition cursor-pointer shadow-2xl">
-                        <h3 class="font-sync text-[10px] text-white mb-2 italic">Blynch Benchmark</h3>
-                        <div id="price-card-benchmark" class="font-sync text-2xl text-red-600 font-black mt-4">$150</div>
-                        <button class="mt-8 w-full btn-red text-white font-sync py-3 rounded-full text-[8px] font-black">Select</button>
-                    </div>
-                    <div onclick="setTier('headlightsStandalone'); haptic()" id="tier-headlights" class="glass p-8 rounded-[40px] border-white/20 hover:border-red-600 transition cursor-pointer">
-                        <h3 class="font-sync text-[10px] text-white mb-2 italic">Headlights Only</h3>
-                        <div class="font-sync text-2xl text-red-600 font-black mt-4">$100</div>
-                        <button class="mt-8 w-full bg-white text-black font-sync py-3 rounded-full text-[8px] font-black">Select</button>
-                    </div>
-                </div>
-            </div>
+            <h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest">Step I. Identification</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24"><div onclick="setSize('Sedan', 0); haptic()" id="size-0" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">Sedan / Coupe</div><div onclick="setSize('2Row', 1); haptic()" id="size-1" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">2 Row SUV</div><div onclick="setSize('3Row', 2); haptic()" id="size-2" class="step-card glass p-10 rounded-3xl font-sync text-[12px] italic font-black">3 Row / Truck</div></div>
+            <div id="package-section" class="hidden opacity-0 transition-all duration-1000"><h2 class="font-sync text-[14px] text-red-500 font-black mb-12 tracking-widest">Step II. Mission Tier</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div onclick="setTier('basic'); haptic()" id="tier-basic" class="glass p-8 rounded-[40px] group border-white/20 hover:border-red-600 transition cursor-pointer"><h3 class="font-sync text-[10px] text-white mb-2">The Basic Detail</h3><div id="price-card-basic" class="font-sync text-2xl text-red-600 font-black mt-4">$120</div><button class="mt-8 w-full bg-white text-black font-sync py-3 rounded-full text-[8px] font-black">Select</button></div><div onclick="setTier('benchmark'); haptic()" id="tier-benchmark" class="glass p-8 rounded-[40px] group border-red-700 transition cursor-pointer shadow-2xl"><h3 class="font-sync text-[10px] text-white mb-2 italic">Blynch Benchmark</h3><div id="price-card-benchmark" class="font-sync text-2xl text-red-600 font-black mt-4">$150</div><button class="mt-8 w-full btn-red text-white font-sync py-3 rounded-full text-[8px] font-black">Select</button></div><div onclick="setTier('headlightsStandalone'); haptic()" id="tier-headlightsStandalone" class="glass p-8 rounded-[40px] border-white/20 hover:border-red-600 transition cursor-pointer"><h3 class="font-sync text-[10px] text-white mb-2">Headlights Only</h3><div class="font-sync text-2xl text-red-600 font-black mt-4">$100</div><button class="mt-8 w-full bg-white text-black font-sync py-3 rounded-full text-[8px] font-black">Select</button></div></div></div>
         </div>
     </section>
 
-    <!-- FOUNDER SECTION -->
     <section id="about" class="py-24 md:py-48 px-6 glass rounded-t-[60px] md:rounded-t-[120px] relative z-10 italic reveal">
-        <div class="max-w-4xl mx-auto italic text-center">
-            <h2 class="font-sync text-[14px] text-red-500 font-black mb-6 tracking-widest italic">The Studio & Founder</h2>
-            <h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-12 md:mb-16 leading-tight italic">Built On <span class="text-red-700">Discipline.</span></h3>
-            <div class="space-y-12 text-white text-lg md:text-xl font-bold leading-relaxed text-left md:text-center">
-                <p>Blynch Details was founded nearly two years ago on a drive for mastery. Founded by a <span class="text-red-700">16-year-old entrepreneur</span>, we approach every restoration with business discipline and uncompromising attention to detail.</p>
-                <p>Every vehicle that enters our studio is treated with the same precision I would expect for my own vehicle. Dealing directly with the owner ensures consistency that high-volume car washes simply cannot match.</p>
-            </div>
-        </div>
+        <div class="max-w-4xl mx-auto italic text-center"><h2 class="font-sync text-[14px] text-red-500 font-black mb-6 tracking-widest">The Studio & Founder</h2><h3 class="font-sync text-3xl md:text-6xl text-white text-center mb-12 md:mb-16 leading-tight">Built On <span class="text-red-700">Discipline.</span></h3>
+        <div class="space-y-12 text-white text-lg md:text-xl font-bold leading-relaxed text-left md:text-center"><p>Blynch Details was founded on a solo mission: to provide the local market with detailing mastery. As a <span class="text-red-500">16-year-old entrepreneur</span>, I approach every restoration with business discipline. Dealing directly with the owner ensures quality that car washes cannot match.</p></div></div>
     </section>
 
-    <!-- SUCCESS STORIES & REVIEWS -->
     <section class="py-24 px-6 relative z-10 italic reveal">
         <h2 class="font-sync text-[12px] md:text-[14px] text-red-600 font-bold text-center mb-24 tracking-[0.4em]">Success Stories</h2>
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-32 italic">
-            <div class="glass p-12 rounded-[50px] border-red-900" data-tilt><p class="text-white text-lg font-black italic mb-10">"Benchmark reset made my SUV look showroom floor new. Incredible detail!"</p><div class="font-sync text-[10px] text-red-600">— Sarah M.</div></div>
-            <div class="glass p-12 rounded-[50px] border-red-900" data-tilt><p class="text-white text-lg font-black italic mb-10">"Clinical attention to detail. Every vent was perfect. Best in Houston."</p><div class="font-sync text-[10px] text-red-600">— Mike R.</div></div>
-            <div class="glass p-12 rounded-[50px] border-red-900" data-tilt><p class="text-white text-lg font-black italic mb-10">"Successful studio. No surprises on price. Highly recommend."</p><div class="font-sync text-[10px] text-red-600">— Jason D.</div></div>
-        </div>
-        <div class="max-w-3xl mx-auto glass p-10 md:p-24 rounded-[60px] text-center border-red-600 shadow-3xl flex flex-col items-center">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 italic mb-32"><div class="glass p-12 rounded-[50px] border-red-900" data-tilt><p class="text-white text-lg italic mb-10 font-black">"Benchmark reset made my SUV look showroom floor new."</p><div class="font-sync text-[10px] text-red-600">— Sarah M.</div></div><div class="glass p-12 rounded-[50px] border-red-900" data-tilt><p class="text-white text-lg italic mb-10 font-black">"Every vent was perfect. Best in Houston."</p><div class="font-sync text-[10px] text-red-600">— Mike R.</div></div><div class="glass p-12 rounded-[50px] border-red-900" data-tilt><p class="text-white text-lg italic mb-10 font-black">"Successful studio. highly recommend."</p><div class="font-sync text-[10px] text-red-600">— Jason D.</div></div></div>
+        <div class="max-w-3xl mx-auto glass p-10 md:p-24 rounded-[60px] text-center border-red-600 flex flex-col items-center">
             <div class="flex justify-center gap-1 mb-8"><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span><span class="text-yellow-500 text-3xl">★</span></div>
-            <h2 class="font-sync text-2xl md:text-4xl text-white mb-6 italic font-black">Rate The Protocol.</h2>
-            <a href="https://g.page/r/CXpGlc5ck74CEBM/review" target="_blank" class="btn-red text-white px-10 md:px-20 py-5 rounded-full font-sync text-[12px] font-black italic">Leave Review</a>
+            <h2 class="font-sync text-2xl md:text-4xl text-white mb-6 italic font-black">Rate The Protocol.</h2><a href="https://g.page/r/CXpGlc5ck74CEBM/review" target="_blank" class="btn-red text-white px-10 md:px-20 py-5 rounded-full font-sync text-[10px] font-black italic">Leave Review</a>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="py-24 px-10 border-t border-red-950 relative z-10 text-center bg-black italic">
-        <img src="logo.png" alt="BLYNCH DETAILS" class="h-12 mx-auto opacity-80 mb-14" onerror="this.style.display='none'">
-        <a href="tel:7245998113" onclick="haptic()" class="font-sync text-2xl md:text-5xl text-white block mb-10 hover:text-red-500 font-black tracking-tighter">724-599-8113</a>
-        <div class="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 font-sync text-[12px] text-red-600 font-bold mb-16 italic font-bold">
-            <a href="https://www.instagram.com/blynchdetails" target="_blank">Instagram</a>
-            <a href="https://www.tiktok.com/@blynchdetails" target="_blank">TikTok</a>
-            <a href="https://www.facebook.com/people/Blynch-Details/100085440788775/" target="_blank">Facebook</a>
-        </div>
-        <p class="font-sync text-[10px] text-gray-600 opacity-60">© 2024 Blynch Details • Interior Restoration Protocol • Houston, PA</p>
-    </footer>
-
-    <!-- OVERLAYS: INNER CIRCLE, WHY US, SERVICES, CONTACT -->
-    <div id="inner-circle-page" class="overlay-page italic">
+    <!-- OVERLAYS -->
+    <div id="inner-circle-page" class="overlay-page">
         <div class="max-w-6xl mx-auto px-6 py-24 text-center">
             <button onclick="toggleOverlay('inner-circle-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full z-[600]">CLOSE [X]</button>
-            <h2 class="font-sync text-3xl md:text-6xl text-white mb-6 italic">The Blynch<br><span class="text-red-600">Inner Circle.</span></h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left mt-16">
-                <div class="glass p-10 rounded-[50px] flex flex-col justify-between border-white/10">
-                    <div><h3 class="font-sync text-lg text-white mb-2">Essential</h3><div class="text-3xl font-black text-red-600 mb-8 italic">$79<span class="text-xs text-gray-500 font-bold">/MO</span></div><ul class="space-y-4 text-xs font-bold text-gray-300 italic"><li>• (1) Monthly Maintenance Clean</li><li>• High-Power Vacuum & Wipe-down</li><li>• Priority Booking Access</li><li>• $20 Off Full Restoration Details</li></ul></div>
-                    <button onclick="applyForMembership('Essential')" class="mt-12 w-full glass text-white py-4 rounded-full font-sync text-[8px]">Apply Now</button>
-                </div>
-                <div class="glass p-10 rounded-[50px] flex flex-col justify-between border-red-600 relative">
-                    <div class="absolute top-0 right-0 bg-red-600 text-white font-sync text-[8px] px-6 py-2 italic font-black">MOST POPULAR</div>
-                    <div><h3 class="font-sync text-lg text-white mb-2 italic">Elite</h3><div class="text-3xl font-black text-red-600 mb-8 italic">$129<span class="text-xs text-gray-500 font-bold">/MO</span></div><ul class="space-y-4 text-xs font-bold text-gray-300 italic"><li>• (1) Full Interior Restoration Monthly</li><li>• Precision Stain Touch-ups</li><li>• Priority Studio Status</li><li>• Discounted Performance Add-ons</li></ul></div>
-                    <button onclick="applyForMembership('Elite')" class="mt-12 w-full btn-red text-white py-4 rounded-full font-sync text-[8px]">Apply Now</button>
-                </div>
-                <div class="glass p-10 rounded-[50px] flex flex-col justify-between card-black">
-                    <div><h3 class="font-sync text-lg mb-2" style="color: var(--gold);">Black Membership</h3><div class="text-3xl font-black mb-8 italic text-white">$200<span class="text-xs text-gray-500 font-bold">/MO</span></div><ul class="space-y-4 text-xs font-bold text-gray-300 italic"><li>• (2) Visits Per Month</li><li>• Full Maintenance Detail</li><li>• Emergency Clean Availability</li><li>• First Priority Pricing & Support</li></ul></div>
-                    <button onclick="applyForMembership('Black')" class="mt-12 w-full bg-white text-black py-4 rounded-full font-sync text-[8px]">Join The Elite</button>
-                </div>
+            <h2 class="font-sync text-3xl md:text-6xl text-white mb-16 italic">The Inner Circle.</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left italic">
+                <div class="glass p-10 rounded-[50px] flex flex-col justify-between border-white/10"><div><h3 class="font-sync text-lg text-white mb-2">Essential</h3><div class="text-3xl font-black text-red-600 mb-8 italic">$79/MO</div><p class="text-xs text-gray-300 font-bold">• (1) Monthly Maintenance Clean • Vacuum & Wipe-down • $20 Off Standalone Details</p></div><button onclick="applyForMembership('Essential')" class="mt-12 w-full glass text-white py-4 rounded-full font-sync text-[8px]">Apply Now</button></div>
+                <div class="glass p-10 rounded-[50px] border-red-600 relative flex flex-col justify-between"><div><h3 class="font-sync text-lg text-white mb-2">Elite</h3><div class="text-3xl font-black text-red-600 mb-8 italic">$129/MO</div><p class="text-xs text-gray-300 font-bold">• (1) Full Restoration Monthly • Stain Touch-ups • Discounted Add-ons</p></div><button onclick="applyForMembership('Elite')" class="mt-12 w-full btn-red text-white py-4 rounded-full font-sync text-[8px]">Apply Now</button></div>
+                <div class="glass p-10 rounded-[50px] card-black flex flex-col justify-between"><div><h3 class="font-sync text-lg mb-2" style="color:var(--gold)">Black</h3><div class="text-3xl font-black mb-8 italic text-white">$200/MO</div><p class="text-xs text-gray-300 font-bold">• (2) Precision Visits • Emergency Availability • Priority Pricing</p></div><button onclick="applyForMembership('Black')" class="mt-12 w-full bg-white text-black py-4 rounded-full font-sync text-[8px]">Apply Now</button></div>
             </div>
         </div>
     </div>
 
-    <div id="why-us-page" class="overlay-page italic"><div class="max-w-4xl mx-auto px-6 py-24 text-center italic"><button onclick="toggleOverlay('why-us-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button><h2 class="font-sync text-4xl md:text-7xl text-white mb-16 italic">The Blynch<br><span class="text-red-700">Advantage.</span></h2><div class="space-y-12 text-gray-200 text-lg font-bold leading-relaxed italic"><div class="glass p-10 rounded-[40px] border-red-600"><h3 class="font-sync text-lg text-red-500 mb-4 italic italic">Elite Quality. Smarter Pricing.</h3><p>By operating from a private studio, we bypass commercial rent and pass those savings to you. Detailing is an investment in preservation.</p></div></div></div></div>
+    <div id="why-us-page" class="overlay-page"><div class="max-w-4xl mx-auto px-6 py-24 text-center"><button onclick="toggleOverlay('why-us-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button><h2 class="font-sync text-4xl md:text-7xl text-white mb-16 italic">The Blynch<br><span class="text-red-700">Advantage.</span></h2><div class="glass p-10 rounded-[40px] border-red-600"><h3 class="font-sync text-lg text-red-500 mb-4 italic">Elite Quality. Smarter Pricing.</h3><p class="font-bold italic">By operating from a private studio, we bypass commercial rent and pass those savings to you. Detailing is an investment in preservation.</p></div></div></div>
+    
+    <div id="service-page" class="overlay-page"><div class="max-w-4xl mx-auto px-6 py-24"><button onclick="toggleOverlay('service-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button><h2 class="font-sync text-4xl md:text-6xl text-white mb-16 italic">Protocol<br><span class="text-red-600">Spec.</span></h2><div class="space-y-10"><div class="glass p-10 rounded-[50px] border-white/20 italic"><h3 class="font-sync text-xl text-red-600 mb-6 italic">The Basic Detail</h3><ul class="space-y-4 text-white font-bold italic"><li>• Debris Extraction</li><li>• Multi-Point Vacuum</li><li>• pH-Neutral Reset</li><li>• Window Clarity</li></ul></div><div class="glass p-10 rounded-[50px] border-red-600 italic"><h3 class="font-sync text-xl text-red-600 mb-6 italic">Blynch Benchmark</h3><ul class="space-y-4 text-white font-bold italic"><li class="text-red-500 underline font-black">INCLUDES BASIC PLUS:</li><li>• Vapor Steam Restoration</li><li>• Hot Water Extraction</li><li>• Targeted Stain Remediation</li><li>• Surgical Detailing</li></ul></div></div></div></div>
 
-    <div id="service-page" class="overlay-page italic"><div class="max-w-4xl mx-auto px-6 py-24"><button onclick="toggleOverlay('service-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button><h2 class="font-sync text-4xl md:text-6xl text-white mb-16 italic">Protocol<br><span class="text-red-600">Specifications.</span></h2><div class="space-y-10"><div class="glass p-12 rounded-[50px] border-white/20 italic"><h3 class="font-sync text-xl text-red-600 mb-6 italic">The Basic Detail</h3><ul class="space-y-4 text-white font-black italic italic italic"><li>• Debris Extraction</li><li>• Multi-Point Vacuum</li><li>• pH-Neutral Reset</li><li>• Window Clarity</li></ul></div><div class="glass p-12 rounded-[50px] border-red-600 italic"><h3 class="font-sync text-xl text-red-600 mb-6 italic">Blynch Benchmark</h3><ul class="space-y-4 text-white font-black italic"><li class="text-red-500 underline uppercase italic">Includes Basic Plus:</li><li>• Vapor Steam Restoration</li><li>• Hot Water Extraction</li><li>• Targeted Stain Remediation</li><li>• Surgical Detailing</li></ul></div></div></div></div>
+    <div id="contact-page" class="overlay-page"><div class="max-w-4xl mx-auto px-6 py-24 text-center italic"><button onclick="toggleOverlay('contact-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button><h2 class="font-sync text-4xl md:text-6xl text-white mb-20">Connect<br><span class="text-red-700">Studio.</span></h2><div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left"><div class="glass p-8 rounded-3xl border-red-600"><h3 class="text-red-600 font-sync text-[10px] mb-2 italic">Direct</h3><a href="tel:7245998113" class="text-2xl font-black italic">724-599-8113</a></div><div class="glass p-8 rounded-3xl border-red-600 h-64 overflow-hidden"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3042.846!2d-80.2117!3d40.2478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDE0JzUyLjEiTiA4MMKwMTInNDIuMSJX!5e0!3m2!1sen!2sus!4v1712715000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div></div></div></div>
 
-    <div id="contact-page" class="overlay-page italic"><div class="max-w-4xl mx-auto px-6 py-24 text-center"><button onclick="toggleOverlay('contact-page'); haptic()" class="fixed top-8 right-8 font-sync text-red-600 font-bold text-sm bg-white text-black px-6 py-3 rounded-full">CLOSE [X]</button><h2 class="font-sync text-4xl md:text-6xl text-white mb-20 italic">Connect<br><span class="text-red-700">Studio.</span></h2><div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left italic"><div class="glass p-8 rounded-3xl border-red-600 italic"><h3 class="text-red-600 font-sync text-[10px] mb-2 italic">Direct</h3><a href="tel:7245998113" class="text-2xl font-black italic">724-599-8113</a></div><div class="glass p-8 rounded-3xl border-red-600 h-64 overflow-hidden italic"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3042.846!2d-80.2117!3d40.2478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDE0JzUyLjEiTiA4MMKwMTInNDIuMSJX!5e0!3m2!1sen!2sus!4v1712715000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div></div></div></div>
-
-    <!-- CONFIGURATOR TRAY -->
+    <!-- TRAY & BOOKING -->
     <div id="config-modal" class="fixed inset-0 modal-overlay z-[600] hidden flex items-end md:items-center justify-center p-0 md:p-4 italic">
         <div id="config-tray" class="glass border-t-4 md:border-4 border-red-700 w-full max-w-3xl rounded-t-[40px] md:rounded-[60px] overflow-hidden flex flex-col max-h-[92vh] tray-anim">
             <div class="p-8 md:p-12 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-red-900/40 to-transparent italic">
                 <h2 class="font-sync text-lg text-white font-black italic">Diagnostic Suite</h2>
-                <button onclick="closeConfig(); haptic()" class="text-white text-4xl italic">✕</button>
+                <button onclick="closeConfig(); haptic()" class="text-white text-3xl">✕</button>
             </div>
-            <div class="p-8 md:p-12 overflow-y-auto space-y-12 italic">
-                <div id="premium-pack-container" class="glass p-8 rounded-[40px] border-2 border-yellow-500/50 bg-gradient-to-b from-yellow-950/10 to-black italic relative overflow-hidden italic">
+            <div class="p-8 md:p-12 overflow-y-auto space-y-12">
+                <div id="premium-pack-container" class="glass p-8 rounded-[40px] border-2 border-yellow-500/50 bg-gradient-to-b from-yellow-950/10 to-black italic relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-yellow-500 text-black font-sync text-[8px] px-6 py-2 font-black italic">BEST VALUE</div>
                     <h3 class="font-sync text-sm text-yellow-500 mb-2 italic">BLYNCH PREMIUM PACK</h3>
                     <p class="text-[10px] text-gray-300 mb-6 italic font-bold">Includes: Pet Hair + Ozone + Headlight Restoration</p>
@@ -247,53 +124,67 @@
                     <div class="p-8 rounded-3xl border-2 border-red-600 flex justify-between items-center bg-black italic"><div><h4 class="font-sync text-[11px] text-red-500 font-black italic">Pet Hair?</h4><p class="text-[10px] text-white font-black uppercase italic">Static Lift (+$20)</p></div><input type="checkbox" id="pet-hair-toggle" class="w-16 h-8 accent-red-600" onchange="calculate(); haptic()"></div>
                     <div class="p-8 rounded-3xl border-2 border-white/20 bg-black italic"><div class="flex justify-between items-center mb-6 italic"><h4 class="font-sync text-[11px] text-red-500 font-black italic">Soil Gauge</h4><span id="soil-val" class="font-sync text-xl text-white font-black italic">5/10</span></div><input type="range" id="soil-slider" min="1" max="10" value="5" oninput="updateSoil(); haptic()"></div>
                 </div>
-                <div id="addon-list" class="grid grid-cols-1 md:grid-cols-2 gap-6 font-bold text-white italic"></div>
+                <div id="addon-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold italic text-white italic"></div>
             </div>
-            <div class="p-8 bg-black border-t-2 border-red-600 flex justify-between items-center italic">
-                <div><p class="font-sync text-[10px] text-red-600 font-black italic">EST. INVESTMENT</p><h3 id="total-price" class="font-sync text-2xl md:text-5xl text-white font-black italic">$0</h3></div>
+            <div class="p-8 bg-black border-t-2 border-red-600 flex justify-between items-center">
+                <div><p class="font-sync text-[10px] text-red-600 font-black italic">INVESTMENT</p><h3 id="total-price" class="font-sync text-2xl md:text-5xl text-white font-black italic">$0</h3></div>
                 <button onclick="openBooking(); haptic()" class="btn-red text-white px-10 md:px-14 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black italic">CONTINUE</button>
             </div>
         </div>
     </div>
 
-    <!-- BOOKING MODAL -->
     <div id="booking-modal" class="fixed inset-0 modal-overlay z-[700] hidden flex items-center justify-center p-3 italic">
-        <div id="booking-glass" class="glass w-full max-w-xl p-6 md:p-12 rounded-[40px] md:rounded-[60px] border-red-600 bg-black overflow-y-auto max-h-[90vh] italic">
-            <h2 id="booking-headline" class="font-sync text-xl text-white mb-8 text-center font-black italic italic italic">Request Slot</h2>
-            <form action="https://formspree.io/f/xvzvwvzl" method="POST" class="space-y-6 italic">
+        <div id="booking-glass" class="glass w-full max-w-xl p-6 md:p-12 rounded-[40px] md:rounded-[60px] border-red-600 bg-black overflow-y-auto max-h-[90vh]">
+            <h2 id="booking-headline" class="font-sync text-xl text-white mb-8 text-center font-black">Request Slot</h2>
+            <form action="https://formspree.io/f/xvzvwvzl" method="POST" class="space-y-6">
                 <input type="hidden" name="Price" id="form-total"><input type="hidden" name="Size" id="form-size">
                 <input type="hidden" name="Tier" id="form-tier"><input type="hidden" name="Soil" id="form-soil">
                 <input type="hidden" name="Dates" id="form-dates"><input type="hidden" name="Addons" id="form-addons">
                 <input type="hidden" name="Membership" id="form-membership" value="None">
-                <div id="booking-dates-container"><h4 class="text-[10px] font-sync text-red-600 mb-4 text-center italic font-bold">Target Dates</h4><div id="date-grid" class="grid grid-cols-4 md:grid-cols-7 gap-2 mb-2 font-bold italic text-white italic italic italic"></div><p id="selected-dates-text" class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest font-black italic">No dates selected</p></div>
-                <div class="space-y-4 italic italic"><input type="text" name="Client" placeholder="Your Name" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic"><input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic"><textarea name="Vehicle" placeholder="Year, Make, Model" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white h-20 font-bold italic"></textarea></div>
-                <div class="bg-red-950/20 p-6 rounded-3xl border-2 border-red-600 italic"><label class="flex gap-4 cursor-pointer items-start italic italic"><input type="checkbox" id="disclaimer-check" required class="w-8 h-8 accent-red-600 mt-1" onchange="toggleSubmit(); haptic()"><span id="disclaimer-text" class="text-[11px] font-black text-white leading-relaxed italic uppercase italic">Final pricing verified upon inspection.</span></label></div>
+                <div id="booking-dates-container"><div id="date-grid" class="grid grid-cols-4 md:grid-cols-7 gap-2 mb-2 font-bold italic text-white italic"></div><p id="selected-dates-text" class="text-[9px] text-gray-400 mt-4 text-center italic">No dates selected</p></div>
+                <div class="space-y-4"><input type="text" name="Client" placeholder="Your Name" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic"><input type="tel" name="Phone" placeholder="Mobile" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white font-bold italic"><textarea name="Vehicle" placeholder="Year, Make, Model" required class="w-full bg-black border-2 border-white/20 p-4 rounded-2xl text-white h-20 font-bold italic"></textarea></div>
+                <div class="bg-red-950/20 p-6 rounded-3xl border-2 border-red-600 italic"><label class="flex gap-4 cursor-pointer items-start"><input type="checkbox" id="disclaimer-check" required class="w-8 h-8 accent-red-600 mt-1" onchange="toggleSubmit(); haptic()"><span id="disclaimer-text" class="text-[11px] font-black text-white leading-relaxed italic uppercase italic">Final pricing verified upon inspection.</span></label></div>
                 <button type="submit" id="submit-btn" disabled class="font-sync w-full bg-zinc-800 text-zinc-500 py-6 rounded-full text-[11px] font-black italic">SUBMIT PROTOCOL</button>
             </form>
-            <button onclick="closeBooking(); haptic()" class="w-full mt-4 text-[10px] font-black text-red-600 uppercase text-center italic italic italic italic">BACK</button>
+            <button onclick="closeBooking(); haptic()" class="w-full mt-4 text-[10px] font-black text-red-600 uppercase text-center">BACK</button>
         </div>
     </div>
 
+    <footer class="py-24 px-10 border-t border-red-950 relative z-10 text-center bg-black italic">
+        <div class="mb-14 flex justify-center italic"><img src="logo.png" alt="BLYNCH DETAILS" class="h-10 md:h-14 opacity-80" onerror="handleImgErr(this, 'logo')"></div>
+        <a href="tel:7245998113" onclick="haptic()" class="font-sync text-2xl md:text-5xl text-white block mb-10 hover:text-red-500 italic font-black italic">724-599-8113</a>
+        <div class="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 font-sync text-[12px] text-red-600 font-bold mb-16 italic font-bold">
+            <a href="https://www.instagram.com/blynchdetails" target="_blank">Instagram</a>
+            <a href="https://www.tiktok.com/@blynchdetails" target="_blank">TikTok</a>
+            <a href="https://www.facebook.com/people/Blynch-Details/100085440788775/" target="_blank">Facebook</a>
+        </div>
+        <p class="font-sync text-[10px] text-gray-600 opacity-60 italic italic">© 2024 Blynch Details • Interior Restoration Protocol • Houston, PA</p>
+    </footer>
+
     <script>
-        let currentSizeIdx = 0; let selectedTierType = ''; let selectedDates = [];
+        let currentSizeIdx = 0; let selectedTierType = ''; let selectedDates = []; let activeVIP = null;
         const prices = { basic: [120, 150, 180], benchmark: [150, 180, 210], headlightsStandalone: [100, 100, 100] };
-        const addonsData = {
-            basic: [{ name: 'Stain Removal', p: 25 }, { name: 'Carpet Extraction', p: 30 }, { name: 'Seat Extraction', p: 25 }, { name: 'Leather Conditioner', p: 25 }, { name: 'Leather Ceramic Coating', p: 60 }, { name: 'Ozone Odor Removal', p: 25 }, { name: 'Headlight Restoration', p: 50 }],
-            benchmark: [{ name: 'Leather Conditioner', p: 25 }, { name: 'Leather Ceramic Coating', p: 60 }, { name: 'Ozone Odor Removal', p: 25 }, { name: 'Headlight Restoration', p: 50 }],
-            headlightsStandalone: []
-        };
+        const vipKeys = { 'VIP79': 'Essential', 'ELITE129': 'Elite', 'BLACK200': 'Black' };
 
         function haptic() { if (window.navigator && window.navigator.vibrate) { window.navigator.vibrate(50); } }
-        function handleImgErr(img, type) { const src = img.src; if (src.includes('.png')) img.src = src.replace('.png', '.jpg'); else if (src.includes('.jpg')) img.src = src.replace('.jpg', '.jpeg'); }
+        function handleImgErr(img, t) { const src = img.src; if (src.includes('.png')) img.src = src.replace('.png', '.jpg'); else if (src.includes('.jpg')) img.src = src.replace('.jpg', '.jpeg'); }
         function toggleOverlay(id) { const el = document.getElementById(id); el.classList.toggle('open'); document.body.style.overflow = el.classList.contains('open') ? 'hidden' : 'auto'; }
-        function toggleFaq(btn) { btn.parentElement.classList.toggle('active'); }
+        
+        function checkMemberKey() {
+            const key = prompt("Enter Access Key:");
+            if (vipKeys[key]) { activeVIP = vipKeys[key]; localStorage.setItem('blynchVIP', key); document.body.classList.add('member-unlocked'); calculate(); alert("VIP Verified."); }
+            else { alert("Invalid."); }
+        }
 
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        window.onload = () => {
+            const savedKey = localStorage.getItem('blynchVIP');
+            if (savedKey && vipKeys[savedKey]) { activeVIP = vipKeys[savedKey]; document.body.classList.add('member-unlocked'); }
+            const obs = new IntersectionObserver((es) => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        };
 
         function setSize(size, idx) {
-            currentSizeIdx = idx;
-            document.getElementById('form-size').value = size;
+            currentSizeIdx = idx; document.getElementById('form-size').value = size;
             document.querySelectorAll('#booking-start .step-card').forEach((c, i) => i < 3 ? c.classList.remove('active-selection') : null);
             document.getElementById(`size-${idx}`).classList.add('active-selection');
             document.getElementById('price-card-basic').innerText = `$${prices.basic[idx]}`;
@@ -303,108 +194,82 @@
             if(selectedTierType) calculate();
         }
 
-        function applyForMembership(tier) {
-            haptic(); toggleOverlay('inner-circle-page');
-            const glass = document.getElementById('booking-glass');
-            const headline = document.getElementById('booking-headline');
-            const dates = document.getElementById('booking-dates-container');
-            const disc = document.getElementById('disclaimer-text');
-            glass.style.borderColor = 'var(--gold)';
-            headline.innerText = "Inner Circle Application";
-            headline.style.color = 'var(--gold)';
-            dates.style.display = 'none';
-            document.getElementById('form-membership').value = tier;
-            document.getElementById('form-tier').value = "Membership Application";
-            document.getElementById('form-total').value = "Tier: " + tier;
-            disc.innerText = "I understand membership is subject to vehicle inspection.";
-            document.getElementById('booking-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
         function setTier(tier) {
-            const glass = document.getElementById('booking-glass');
-            const headline = document.getElementById('booking-headline');
-            const dates = document.getElementById('booking-dates-container');
-            glass.style.borderColor = 'var(--red-sharp)';
-            headline.innerText = "Request Slot"; headline.style.color = '#fff';
-            dates.style.display = 'block'; document.getElementById('form-membership').value = "None";
-            selectedTierType = tier;
-            document.querySelectorAll('#package-section .glass').forEach(c => c.classList.remove('active-selection'));
+            selectedTierType = tier; document.querySelectorAll('#package-section .glass').forEach(c => c.classList.remove('active-selection'));
             const tierEl = document.getElementById(`tier-${tier}`) || document.getElementById('tier-headlights');
             if(tierEl) tierEl.classList.add('active-selection');
             document.getElementById('form-tier').value = tier;
-            const list = document.getElementById('addon-list');
-            list.innerHTML = '';
+            const list = document.getElementById('addon-list'); list.innerHTML = '';
             document.getElementById('premium-pack-container').style.display = (tier === 'headlightsStandalone') ? 'none' : 'block';
-            (addonsData[tier] || []).forEach(a => {
-                list.innerHTML += `<div class="flex items-center justify-between p-6 glass border-red-600 rounded-3xl group transition hover:bg-red-950 italic"><span class="font-sync text-[8px] text-white addon-name font-black">${a.name}</span><div class="flex items-center gap-5"><span class="font-sync text-[10px] text-red-500 font-bold">$${a.p}</span><input type="checkbox" onchange="calculate(); haptic()" class="addon-check w-7 h-7 accent-red-600" data-price="${a.p}"></div></div>`;
+            const ads = {
+                basic: [{ name: 'Stain Removal', p: 25 }, { name: 'Carpet Extraction', p: 30 }, { name: 'Seat Extraction', p: 25 }, { name: 'Leather Conditioner', p: 25 }, { name: 'Leather Ceramic Coating', p: 60 }, { name: 'Ozone Odor Removal', p: 25 }, { name: 'Headlight Restoration', p: 50 }],
+                benchmark: [{ name: 'Leather Conditioner', p: 25 }, { name: 'Leather Ceramic Coating', p: 60 }, { name: 'Ozone Odor Removal', p: 25 }, { name: 'Headlight Restoration', p: 50 }],
+                headlightsStandalone: []
+            };
+            (ads[tier] || []).forEach(a => {
+                let dp = a.p; if (activeVIP === 'Elite' || activeVIP === 'Black') dp = Math.floor(a.p * 0.8);
+                list.innerHTML += `<div class="flex items-center justify-between p-6 glass border-red-600 rounded-3xl group transition hover:bg-red-950 italic"><span class="font-sync text-[8px] text-white addon-name italic font-black">${a.name}</span><div class="flex items-center gap-5"><span class="font-sync text-[10px] text-red-500 font-bold">$${dp}</span><input type="checkbox" onchange="calculate(); haptic()" class="addon-check w-7 h-7 accent-red-600" data-price="${dp}"></div></div>`;
             });
             document.getElementById('config-modal').classList.remove('hidden');
             setTimeout(() => document.getElementById('config-tray').classList.add('tray-show'), 10);
-            document.body.style.overflow = 'hidden';
-            calculate();
-        }
-
-        function togglePremiumPack() {
-            const pack = document.getElementById('premium-pack-toggle').checked;
-            const addons = document.querySelectorAll('.addon-check');
-            const petHair = document.getElementById('pet-hair-toggle');
-            addons.forEach(cb => {
-                const name = cb.closest('div.group').querySelector('.addon-name').innerText;
-                if (name.includes('Headlight') || name.includes('Ozone')) {
-                    cb.checked = false; cb.disabled = pack; cb.closest('div.group').style.opacity = pack ? '0.3' : '1';
-                }
-            });
-            petHair.checked = false; petHair.disabled = pack; petHair.closest('div.p-8').style.opacity = pack ? '0.3' : '1';
-            calculate();
+            document.body.style.overflow = 'hidden'; calculate();
         }
 
         function calculate() {
-            let total = prices[selectedTierType][currentSizeIdx];
-            const pack = document.getElementById('premium-pack-toggle');
-            const petHair = document.getElementById('pet-hair-toggle');
-            if (pack && pack.checked) { total += 99; } else {
-                if (petHair && petHair.checked) total += 20;
-                document.querySelectorAll('.addon-check:checked').forEach(c => { total += parseInt(c.getAttribute('data-price')); });
+            let b = prices[selectedTierType][currentSizeIdx];
+            if (activeVIP === 'Essential' && (selectedTierType === 'basic' || selectedTierType === 'benchmark')) b -= 20;
+            if (activeVIP === 'Elite' || activeVIP === 'Black') b = Math.floor(b * 0.85);
+            let t = b;
+            if (document.getElementById('premium-pack-toggle').checked) { t += 99; } else {
+                if (document.getElementById('pet-hair-toggle').checked) t += 20;
+                document.querySelectorAll('.addon-check:checked').forEach(c => { t += parseInt(c.getAttribute('data-price')); });
             }
-            document.getElementById('total-price').innerText = `$${total}`;
-            document.getElementById('form-total').value = `$${total}`;
+            document.getElementById('total-price').innerText = `$${t}`;
+            document.getElementById('form-total').value = `$${t} (VIP: ${activeVIP || 'No'})`;
         }
 
-        function closeConfig() { document.getElementById('config-tray').classList.remove('tray-show'); setTimeout(() => document.getElementById('config-modal').classList.add('hidden'), 500); document.body.style.overflow = 'auto'; }
+        function togglePremiumPack() {
+            const pk = document.getElementById('premium-pack-toggle').checked;
+            document.querySelectorAll('.addon-check').forEach(cb => {
+                const n = cb.closest('div.group').querySelector('.addon-name').innerText;
+                if (n.includes('Headlight') || n.includes('Ozone')) { cb.checked = false; cb.disabled = pk; cb.closest('div.group').style.opacity = pk ? '0.3' : '1'; }
+            });
+            const ph = document.getElementById('pet-hair-toggle'); ph.checked = false; ph.disabled = pk; ph.closest('div.p-8').style.opacity = pk ? '0.3' : '1';
+            calculate();
+        }
+
+        function applyForMembership(t) {
+            haptic(); toggleOverlay('inner-circle-page');
+            const g = document.getElementById('booking-glass'); const h = document.getElementById('booking-headline');
+            g.style.borderColor = 'var(--gold)'; h.innerText = "Membership Application"; h.style.color = 'var(--gold)';
+            document.getElementById('booking-dates-container').style.display = 'none';
+            document.getElementById('form-membership').value = t;
+            document.getElementById('form-tier').value = "Membership"; document.getElementById('form-total').value = "Tier: " + t;
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function closeConfig() { document.getElementById('config-modal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
         function updateSoil() { document.getElementById('soil-val').innerText = `${document.getElementById('soil-slider').value}/10`; calculate(); }
         function openBooking() { document.getElementById('config-modal').classList.add('hidden'); document.getElementById('booking-modal').classList.remove('hidden'); genDates(); }
         function closeBooking() { document.getElementById('booking-modal').classList.add('hidden'); document.getElementById('config-modal').classList.remove('hidden'); }
+        function toggleSubmit() { const b = document.getElementById('submit-btn'); const c = document.getElementById('disclaimer-check').checked; b.disabled = !c; b.classList.toggle('bg-zinc-800', !c); b.classList.toggle('btn-red', c); }
 
         function genDates() {
-            const grid = document.getElementById('date-grid'); grid.innerHTML = '';
-            const today = new Date();
+            const g = document.getElementById('date-grid'); g.innerHTML = ''; const td = new Date();
             for(let i=1; i<=14; i++) {
-                const date = new Date(); date.setDate(today.getDate() + i);
-                const day = date.toLocaleString('en-us', {weekday: 'short'});
-                const num = date.getDate(); const full = date.toLocaleDateString();
-                const btn = document.createElement('div');
-                btn.className = "glass p-4 text-center rounded-xl cursor-pointer step-card font-sync text-[8px]";
-                btn.innerHTML = `<div>${day}</div><div>${num}</div>`;
-                btn.onclick = () => {
-                    haptic();
-                    if (selectedDates.includes(full)) { selectedDates = selectedDates.filter(d => d !== full); btn.classList.remove('active-date'); }
-                    else if (selectedDates.length < 3) { selectedDates.push(full); btn.classList.add('active-date'); }
+                const d = new Date(); d.setDate(td.getDate() + i);
+                const dy = d.toLocaleString('en-us', {weekday: 'short'}); const nm = d.getDate(); const f = d.toLocaleDateString();
+                const b = document.createElement('div'); b.className = "glass p-4 text-center rounded-xl cursor-pointer step-card font-sync text-[7px]";
+                b.innerHTML = `<div>${dy}</div><div>${nm}</div>`;
+                b.onclick = () => {
+                    if (selectedDates.includes(f)) { selectedDates = selectedDates.filter(x => x !== f); b.classList.remove('active-date'); }
+                    else if (selectedDates.length < 3) { selectedDates.push(f); b.classList.add('active-date'); }
                     document.getElementById('form-dates').value = selectedDates.join(' | ');
                     document.getElementById('selected-dates-text').innerText = "SELECTED: " + selectedDates.join(' | ');
                 };
-                grid.appendChild(btn);
+                g.appendChild(b);
             }
         }
-
-        function toggleSubmit() {
-            const check = document.getElementById('disclaimer-check').checked;
-            const btn = document.getElementById('submit-btn');
-            const isMembership = document.getElementById('form-membership').value !== "None";
-            if(check) { btn.disabled = false; btn.classList.replace('bg-zinc-800', isMembership ? 'btn-gold' : 'btn-red'); btn.classList.replace('text-zinc-500', 'text-white'); }
-            else { btn.disabled = true; btn.classList.remove('btn-red', 'btn-gold'); btn.classList.add('bg-zinc-800', 'text-zinc-500'); }
-        }
-        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 5, speed: 400, glare: true, "max-glare": 0.2 });
     </script>
 </body>
 </html>
